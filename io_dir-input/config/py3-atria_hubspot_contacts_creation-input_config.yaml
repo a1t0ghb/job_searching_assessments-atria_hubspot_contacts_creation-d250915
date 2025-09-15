@@ -31,14 +31,8 @@ parameters:
         comment: "IANA time zones (e.g. 'Etc/GMT-4', 'EST', 'US/Eastern'). Full list available from running python codeline: 'zoneinfo.available_timezones()'. Ref.: 'https://docs.python.org/3/library/zoneinfo.html#zoneinfo.available_timezones', and 'https://en.wikipedia.org/wiki/List_of_tz_database_time_zones'."
         value: 'America/Bogota'
     -
-        name: _TIME_DELAY_FOR_START_OF_SONG_LINES_TYPEWRITER
-        type: 'integer'
+        name: _USER_NEW_CONTACTS_FILENAME
+        type: 'string'
         subtype:
-        comment: "Delay in seconds."
-        value: 5
-    -
-        name: _INTERVAL_FOR_CLEARING_OUTPUT_AFTER_REGULAR_LINES
-        type: 'integer'
-        subtype:
-        comment: "Amount of regular lines (i.e. not delays, nor '...') to consider before clearing the console / terminal / CLI output. Mainly for readibility purposes."
-        value: 7
+        comment: "Filename of csv file to have list of new contacts to add to Hubspot."
+        value: 'contacts-new_entries.csv'
