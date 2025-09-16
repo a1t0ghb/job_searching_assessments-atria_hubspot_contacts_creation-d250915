@@ -36,3 +36,18 @@ parameters:
         subtype:
         comment: "Filename of csv file to have list of new contacts to add to Hubspot."
         value: 'contacts-new_entries.csv'
+    -   name: _HUBSPOT_API_URL
+        type: 'string'
+        subtype:
+        comment: "URL to connect to HubSpot API."
+        value: 'https://api.hubapi.com/'
+    -   name: _HUBSPOT_API_URL_NODE_CONTACTS
+        type: 'string'
+        subtype:
+        comment: "Node for Contacts, in HubSpot API; e.g. to create contacts: 'https://developers.hubspot.com/docs/api-reference/crm-contacts-v3/basic/get-crm-v3-objects-contacts'."
+        value: 'crm/v3/objects/contacts'
+    -   name: _HUBSPOT_API_URL_NODE_CONTACTS_BATCHES
+        type: 'string'
+        subtype:
+        comment: "Node for Contacts, in HubSpot API; e.g. to create contacts in batches: 'https://developers.hubspot.com/docs/api-reference/crm-contacts-v3/batch/post-crm-v3-objects-contacts-batch-create'."
+        value: 'crm/v3/objects/contacts/batch/create'
