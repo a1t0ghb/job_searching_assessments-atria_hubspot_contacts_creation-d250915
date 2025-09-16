@@ -1,0 +1,30 @@
+#  DEPENDENCIES / PACKAGES TO LIST.
+#  - WHILE, and AFTER finishing development.
+#  - File with format '.in' to compile with 'pip-compile' to get '.txt' file; e.g. '$ pip-compile 'requirements_prod.in'', will produce 'requirements_prod.txt' file.
+#    - Ref.: 'https://github.com/jazzband/pip-tools?tab=readme-ov-file#requirements-from-requirementsin'.
+#    - Ref.: 'https://pip.pypa.io/en/stable/user_guide/#requirements-files'.
+#    - Ref.: 'https://pip.pypa.io/en/stable/reference/requirements-file-format/#requirements-file-format'.
+#  - COMMAND FOR REFERENCE: '$ pip-compile 'requirements_prod.in''
+
+#  CONSTRAINTS.
+#  - Constraint files to LOCK indirect / transitive dependencies and their versions (if installed).
+#    - Ref.: 'https://github.com/jazzband/pip-tools?tab=readme-ov-file#workflow-for-layered-requirements'.
+#    - Ref.: 'https://luminousmen.com/post/pip-constraints-files'.
+#    - Ref.: 'https://stackoverflow.com/questions/34645821/pip-constraints-files'.
+#    - Ref.: 'https://www.reddit.com/r/Python/comments/114vwiv/use_pips_constraints_files_to_manage_your_python/'.
+#  - E.g. '--constraint 'requirements_prod.txt''
+#
+#  [Not necessary, usually.]
+
+#  DEPENDENCIES: WHILE DEVELOPING.
+#  - For global development; i.e. this and other projects.
+#  - Usually requires most recent versions / not pinned.
+#  - E.g. 'fastapi'.
+#
+rich
+
+#  DEPENDENCIES: FOR PRODUCTION (PINNED).
+#  - AFTER finishing development, to pin versions used.
+#  - You get pinned versions: a) after finishing development, and b) after running '$ pip-compile 'requirements_prod.in''.
+#  - E.g. 'fastapi==0.112.0'.
+#

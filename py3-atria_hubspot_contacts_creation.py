@@ -453,7 +453,7 @@ def main():
     UDFLoadVariablesToGlobals(yaml_variables_dictionary)
 
     #  Set execution timezone.
-    _TIME_ZONE = zoneinfo.ZoneInfo(_USER_GEOGRAPHIC_TIMEZONE)
+    _TIME_ZONE = zoneinfo.ZoneInfo(_USER_GEOGRAPHIC_TIMEZONE) # pyright: ignore[reportUndefinedVariable]
 
     #  [INITIALIZATION] INPUT: USER PARAMETERS FILE(S) LOAD.
 
@@ -463,11 +463,11 @@ def main():
     #  - Using list comprehension: 'https://stackoverflow.com/questions/25082410/apply-function-to-each-element-of-a-list/25082458#25082458', 'https://ellibrodepython.com/list-comprehension-python', 'https://www.geeksforgeeks.org/python/apply-function-to-each-element-of-a-list-python/'.
     input_user_files_filenames = [os.path.basename(input_user_files_filepath) for input_user_files_filepath in input_user_files_filepaths_relative_to_home]
     #  Throws an AssertionError, if no path found.
-    assert _USER_NEW_CONTACTS_FILENAME in input_user_files_filenames, f"[ERROR] Input file called '{_USER_NEW_CONTACTS_FILENAME}', should exist in order for current script to run properly."
+    assert _USER_NEW_CONTACTS_FILENAME in input_user_files_filenames, f"[ERROR] Input file called '{_USER_NEW_CONTACTS_FILENAME}', should exist in order for current script to run properly." # pyright: ignore[reportUndefinedVariable]
 
     #  Gets filepaths of contacts new file, defined by developer in variable '_USER_NEW_CONTACTS_FILENAME'.
     new_contacts_csv_filepaths = list(filter(
-            lambda x : os.path.basename(x) == _USER_NEW_CONTACTS_FILENAME,
+            lambda x : os.path.basename(x) == _USER_NEW_CONTACTS_FILENAME, # pyright: ignore[reportUndefinedVariable]
             input_user_files_filepaths_relative_to_home
         )
     )
@@ -481,7 +481,7 @@ def main():
 
     #  [MAIN] HUBSPOT API CONNECTION, via HTTP.
 
-    api_results_create_contacts = UDFHubSpotSendAPIRequest(IApiUrl = _HUBSPOT_API_URL, IApiUrlNode = _HUBSPOT_API_URL_NODE_CONTACTS_BATCHES, IApiToken = _HUBSPOT_API_TOKEN, IApiPayload = new_contacts_payload)
+    api_results_create_contacts = UDFHubSpotSendAPIRequest(IApiUrl = _HUBSPOT_API_URL, IApiUrlNode = _HUBSPOT_API_URL_NODE_CONTACTS_BATCHES, IApiToken = _HUBSPOT_API_TOKEN, IApiPayload = new_contacts_payload) # pyright: ignore[reportUndefinedVariable]
     # rprint(api_results_create_contacts)
 
 #  CODE EXECUTION.
