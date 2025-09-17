@@ -1,6 +1,22 @@
 #  Code that ALWAYS get executed; either main, or imported as module from other script.
 # print(__name__)
 
+# #  LIBRARIES / PACKAGES MANUAL INSTALLATION, if not using devcontainers in VS Code, but single '.py' file stand-alone running.
+# #  - NOTE: to manually run in a terminal:
+# sudo apt update && sudo apt -y upgrade && sudo apt autoremove   #  Update distro.
+# pip install --upgrade pip setuptools                            #  Keep pip, and complement updated: 'https://simpleaudio.readthedocs.io/en/latest/installation.html#installation', 'https://stackoverflow.com/questions/41216875/what-is-the-purpose-of-python-setuptools/41217568#41217568'.
+# # pip install os                                                #  Usually built-in module within python; i.e. if so, no need to '$pip install ...'.
+# pip install rich                                                #  See 'rich[jupyter]' comment.
+# # pip install rich[jupyter]                                     #  Install this, if intended to use rich with Jupyter: 'https://rich.readthedocs.io/en/stable/introduction.html#installation'.
+# # pip install warnings                                          #  Usually built-in module within python; i.e. if so, no need to '$pip install ...'.
+# # pip install glob                                              #  Usually built-in module within python; i.e. if so, no need to '$pip install ...'.
+# # pip install re                                                #  Usually built-in module within python; i.e. if so, no need to '$pip install ...'.
+# pip install PyYAML
+# # pip install datetime                                          #  Usually built-in module within python; i.e. if so, no need to '$pip install ...'.
+# # pip install zoneinfo                                          #  Usually built-in module within python; i.e. if so, no need to '$pip install ...'.
+# pip install requests
+# # pip install tkinter                                           #  Usually built-in module within python; i.e. if so, no need to '$pip install ...'.
+
 #  LIBRARIES / PACKAGES IMPORTS.
 
 import os                                   #  To work with directories.
@@ -11,11 +27,9 @@ import re                                   #  For REGEX, listing files, format 
 import yaml                                 #  For managing input files in YAML format.
 import datetime                             #  To manage dates, times, and time durations.
 import zoneinfo                             #  For timezones.
-import pandas as pd                         #  Dataframes, and csv's.
-import copy                                 #  For shallow and deep copies, specially oj objects such as dictionaries, dataframes, etc.
 import requests                             #  To send HTTP requests.
-import json                                 #  To convert Python objects (generally lists and dictionaries with appropiate structure) to JSONs strings (a.k.a. 'dumps'), and viceversa (a.k.a. 'loads').
-import numpy as np                          #  Dataframes NaNs to None, and viceversa.
+import tkinter                              #  Simple GUI toolkit.
+import tkinter.messagebox                   #  Requires EXPLICIT import: 'https://stackoverflow.com/questions/29774938/tkinter-messagebox-showinfo-doesnt-always-work/29780454#29780454'.
 
 #  USER DEFINEND FUNCTIONS (UDFs).
 
@@ -204,98 +218,10 @@ def UDFLoadVariablesToGlobals(IDictionary: dict) -> None:
 
     return None
 
-#  Transform a dataframe into proper JSON format, according to HubSpot API requirements.
-#  - Pandas dataframe as parameter type: 'https://stackoverflow.com/questions/43890844/pythonic-type-hints-with-pandas/47653753#47653753'.
-def UDFGetNewContactsHubSpotPayload(IDataFrame: pd.DataFrame) -> dict:
-    payload_dictionary = {}
-
-    #  Transform dataframe into 'dictionary' of records-like format; i.e. list, with each entry as a dictionary specifying key-value pairs: 'https://stackoverflow.com/questions/26716616/convert-a-pandas-dataframe-to-a-dictionary/26716774#26716774'.
-    new_contacts_dictionay_records = IDataFrame.to_dict(orient = 'records')
-    
-    #  Clean dictionary of 'None' values; i.e. remove key, if it's value is 'None'.
-    #  - Ref. 'https://stackoverflow.com/questions/33797126/proper-way-to-remove-keys-in-dictionary-with-none-values-in-python/33797147#33797147'.
-    #  - Ref. 'https://www.geeksforgeeks.org/python/python-remove-item-from-dictionary-when-key-is-unknown/'.
-    #  Define a condition function to match key-value pairs.
-    UDFDictionaryCondition = lambda k, v: v is None   #  Matches if the value is 'None'.
-    # Use dictionary comprehension to create a new dictionary. Exclude key-value pairs that satisfy the condition.
-    new_contacts_dictionay_records_clean = [{k:v for k, v in i.items() if not UDFDictionaryCondition(k, v)} for i in new_contacts_dictionay_records]
-
-    #  Transforms data to adjust to format of HubSpot API format for creating a batch of contacts.
-    #  - You can 'play' and get to know the format in the HubSpot API documentation (and 'live playground'): 'https://developers.hubspot.com/docs/api-reference/crm-contacts-v3/batch/post-crm-v3-objects-contacts-batch-create?playground=open'.
-    payload_dictionary = {
-        "inputs": [dict(properties = i) for i in new_contacts_dictionay_records_clean]
-    }
-
-    return payload_dictionary
-
-#  Load CSV, SPECIFIC to new contacts; e.g. 'contacts-new_entries.csv'.
-#  - IT REQUIRES CUSTOM FUNCTION UDFGetNewContactsHubSpotPayload().
-#  - Input is a csv file in proper format:
-#+ a. csv file MUST have a header with 'column' names: 'firstname', 'lastname', and 'email'.
-#+ b. EACH csv record MUST BE of type: 'object, object, object'. That is for replace of np.nan to work properly!: 'https://stackoverflow.com/questions/42818262/pandas-dataframe-replace-nat-with-none/42818550#42818550'.
-#  - Output: a dictionary containing objects.
-#+ Format is { '<object1_name>': <object1>, '<object2_name>': <object2>, ... }
-def UDFLoadCSVNewContacts(ICsvFilepath: str) -> list:
-    objects_dictionary = {}
-
-    #  Pandas dataframe custom parameters. 'dtypes' list available at: 'https://pandas.pydata.org/docs/user_guide/basics.html#dtypes'.
-    DATAFRAME_COLUMN_TYPES = {'firstname': 'object', 'lastname': 'object', 'email': 'object'}
-    DATAFRAME_COLUMN_NAMES = list(DATAFRAME_COLUMN_TYPES.keys())
-
-    #  Create Pandas dataframe, from '.csv' file: 'https://www.datacamp.com/tutorial/pandas-read-csv', 'https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html'.
-    #  - Forces to avoid creating header from file, ommiting line 0 (first data point).
-    #  - Header with column names will be provided with list 'DATAFRAME_COLUMN_NAMES'; e.g. 'name', and 'value'.
-    #  - Columns data types will be provided with list 'DATAFRAME_COLUMN_TYPES'; e.g. dtype 'string' for 'name', and dtype 'object' for 'value' (to keep intended original value).
-    new_contacts_dataframe = pd.read_csv(ICsvFilepath, header = 0, names = DATAFRAME_COLUMN_NAMES, dtype = DATAFRAME_COLUMN_TYPES)
-
-    #  Clean dataframe.
-    column_order_list                       = ['email', 'firstname', 'lastname']                    #  Rearrange columns order: define order with list.
-    new_contacts_dataframe                  = new_contacts_dataframe[column_order_list]             #  Rearrange columns order.
-    new_contacts_dataframe                  = new_contacts_dataframe.replace(np.nan, None)          #  Clean nulls ('NaN's to 'None'): 'https://www.statology.org/pandas-replace-nan-with-none/'. IMPORTANT: requires column to be type 'object'; not string or similar.
-
-    new_contacts_dataframe['firstname']     = new_contacts_dataframe['firstname'].apply(
-        lambda x : None if ((x is None) or (str(x).strip() == '')) else (str(x).strip()))           #  Set 'None' if previoulsy entry was set to 'None', or if after trimming spaces, entry is empty.
-    new_contacts_dataframe                  = new_contacts_dataframe[
-        new_contacts_dataframe['firstname'].apply(lambda x : x is not None)]                        #  Filter rows with 'firstname' entries valid; i.e. not 'None'.
-    
-    new_contacts_dataframe['lastname']      = new_contacts_dataframe['lastname'].apply(
-        lambda x : None if ((x is None) or (str(x).strip() == '')) else (str(x).strip()))           #  Set 'None' if previoulsy entry was set to 'None', or if after trimming spaces, entry is empty.
-    
-    new_contacts_dataframe                  = new_contacts_dataframe[
-        new_contacts_dataframe['email'].apply(lambda x : x is not None)]                            #  Filter 'None' BEFORE regex.
-    re_pattern = re.compile(r'^[\w\.-]+@[\w\.-]+\.\w+$')                                            #  Email regex pattern: 'https://www.w3resource.com/python-exercises/pandas/pandas-validate-email-format-in-a-column-using-regex.php'.
-    new_contacts_dataframe                  = new_contacts_dataframe[
-        new_contacts_dataframe['email'].apply(lambda x : re_pattern.match(x) is not None)]          #  Filter rows with 'email' entries valid; i.e. match with email regex format: 'https://stackoverflow.com/questions/50148708/how-do-i-best-validate-email-in-pandas-data-frame/50148909#50148909', and 'https://www.geeksforgeeks.org/python/re-match-in-python/'.
-     
-    # rprint(new_contacts_dataframe.isnull())                                                         #  Quick check of null values.
-
-    #  Get row count of pandas dataframe: 'https://stackoverflow.com/questions/15943769/how-do-i-get-the-row-count-of-a-pandas-dataframe/15943975#15943975'.
-    rprint(f"[LOG] New contacts imported (x{len(new_contacts_dataframe.index)}), from: '{ICsvFilepath}'.")
-
-    #  Transforms dataframe into appropiate JSON format to use with HubSpot API for creating a batch of contacts.
-    new_contacts_payload = UDFGetNewContactsHubSpotPayload(new_contacts_dataframe)
-
-    #  Return objects in a dictionary.
-    #+ 'copy.deepcopy()' function should be used outside of this function, whenever is called. Putting it here, would be inefficient in terms of memory.
-    #+ Ref. 'https://www.geeksforgeeks.org/python/copy-python-deep-copy-shallow-copy/'.
-    objects_dictionary = {
-        'new_contacts_dataframe': new_contacts_dataframe,
-        'new_contacts_payload': new_contacts_payload
-    }
-
-    return objects_dictionary
-
-#  [AUXILIARY] Prettify JSONs; i.e. converts Python object (generally lists and dictionaries with appropiate structure) to JSON string (a.k.a. 'dumps'). Ref. 'https://www.dataquest.io/blog/api-in-python/'.
-def UDFJsonPrint(IObject) -> None:
-    text = json.dumps(IObject, sort_keys = False, indent = 4)
-    print(text)
-    
-    return None
-
 #  Function to make calls to HubStop API, for either: a. get contacts, b. create a batch of contacts.
 #  - Function depends on API URL node passed as parameter; i.e. 'IApiUrlNode'.
-#    - e.g. IApiUrlNode = 'crm/v3/objects/contacts', is for getting HubSpot account contacts. Ref. 'https://developers.hubspot.com/docs/api-reference/crm-contacts-v3/basic/get-crm-v3-objects-contacts'.
-#    - e.g. IApiUrlNode = 'crm/v3/objects/contacts/batch/create', is for creating a batch of contacts; it requires a JSON payload; i.e. 'IApiPayload'. Ref. 'https://developers.hubspot.com/docs/api-reference/crm-contacts-v3/batch/post-crm-v3-objects-contacts-batch-create'.
+#    - e.g. IApiUrlNode = 'crm/v3/objects/contacts', is for getting HubSpot account contacts.
+#    - e.g. IApiUrlNode = 'crm/v3/objects/contacts/batch/create', is for creating a batch of contacts; it requires a JSON payload; i.e. 'IApiPayload'.
 #  - Function only returns if there are no errors in API connection, and returns a dictionary with JSON response.
 def UDFHubSpotSendAPIRequest(IApiUrl: str, IApiUrlNode: str, IApiToken: str, IApiPayload: dict = {}) -> dict:
     api_results = {}
@@ -321,7 +247,7 @@ def UDFHubSpotSendAPIRequest(IApiUrl: str, IApiUrlNode: str, IApiToken: str, IAp
 
     else:
         
-        #  If payload, it's for creating a batch of contacts.
+        #  If payload, it's for creating contacts.
         api_headers = {
             "Authorization": api_token,
             "Content-Type": "application/json"
@@ -336,16 +262,137 @@ def UDFHubSpotSendAPIRequest(IApiUrl: str, IApiUrlNode: str, IApiToken: str, IAp
     if not api_response.ok:
         rprint(f"[LOG] Error connecting to API... Reason: [{api_response.status_code}] '{api_response.reason}'. Error message: {api_response.text}")
         #  Raise an exception if connection wasn't possible: 'https://requests.readthedocs.io/en/latest/user/quickstart/#response-status-codes'.
-        api_response.raise_for_status()
-
-    rprint(f"[LOG] HTTP request to API successful. Reason: [{api_response.status_code}] '{api_response.reason}'.")
-    
-    if bool(IApiPayload):
-        rprint(f"[LOG] {len(api_payload['inputs'])} new contacts were created. Please validate their creation in your personal HubStop account at 'https://app.hubspot.com/contacts/<account_id>'.")
+        # api_response.raise_for_status()
+    else:
+        rprint(f"[LOG] HTTP request to API successful. Reason: [{api_response.status_code}] '{api_response.reason}'.")
+        
+        if bool(IApiPayload):
+            rprint(f"[LOG] Please validate contacts creation in your personal HubStop account at 'https://app.hubspot.com/contacts/<account_id>'.")
     
     #  HTTP Request - Result (as dictionary).
     api_results = api_response.json()
     return api_results
+
+#  [FORM] Validate first name format.
+def UDFFormRegisterValidateFirstName(IValue: str) -> bool:
+    validation = False
+    value_string = IValue.strip()
+
+    if value_string == '':
+        first_name_entry.delete(0, tkinter.END) # pyright: ignore[reportUndefinedVariable]
+    else:
+        validation = True
+        
+    return validation
+
+#  [FORM] Validate last name format.
+def UDFFormRegisterValidateLastName(IValue: str) -> bool:
+    validation = True
+    value_string = IValue.strip()
+
+    if value_string == '':
+        last_name_entry.delete(0, tkinter.END) # pyright: ignore[reportUndefinedVariable]
+        
+    return validation
+
+#  [FORM] Validate email format.
+def UDFFormRegisterValidateEmail(IValue: str) -> bool:
+    validation = False
+    value_string = IValue.strip()
+
+    if value_string == '':
+        email_entry.delete(0, tkinter.END) # pyright: ignore[reportUndefinedVariable]
+    
+    re_pattern = re.compile(r'^[\w\.-]+@[\w\.-]+\.\w+$')        #  Email regex pattern: 'https://www.w3resource.com/python-exercises/pandas/pandas-validate-email-format-in-a-column-using-regex.php'.
+    if re_pattern.match(value_string) is not None:
+        validation = True
+
+    return validation
+
+#  [FORM] Create a function to get data from Entry fields.
+def UDFFormRegister():
+    
+    #  Get user input from the form.
+    first_name                  = first_name_entry.get() # pyright: ignore[reportUndefinedVariable]
+    # print(type(first_name), "'",first_name, "'", sep='')
+    #  Validate inputs: 'https://www.geeksforgeeks.org/python/validating-entry-widget-in-python-tkinter/'.
+    first_name_validation       = UDFFormRegisterValidateFirstName(first_name)
+    last_name                   = last_name_entry.get() # pyright: ignore[reportUndefinedVariable]
+    last_name_validation        = UDFFormRegisterValidateLastName(last_name)
+    email                       = email_entry.get() # pyright: ignore[reportUndefinedVariable]
+    email_validation            = UDFFormRegisterValidateEmail(email)
+    
+    # print(first_name_validation, last_name_validation, email_validation)
+    #  Validate if all validations are 'True': 'https://www.w3schools.com/python/ref_func_all.asp'.
+    if all([first_name_validation, last_name_validation, email_validation]):
+
+        new_contact_payload = {
+            "properties": {
+                "email": email,
+                "firstname": first_name,
+                "lastname": last_name # TODO: it can be 'empty'; review how to dynamically adjust dictionary, to not include it in those cases.
+            }
+        }
+
+        api_results_create_contacts = UDFHubSpotSendAPIRequest(
+            IApiUrl = _HUBSPOT_API_URL, # pyright: ignore[reportUndefinedVariable]
+            IApiUrlNode = _HUBSPOT_API_URL_NODE_CONTACTS, # pyright: ignore[reportUndefinedVariable]
+            IApiToken = _HUBSPOT_API_TOKEN, # pyright: ignore[reportUndefinedVariable]
+            IApiPayload = new_contact_payload
+        )
+        # rprint(api_results_create_contacts)
+        tkinter.messagebox.showinfo('Information', 'Please validate execution results with LOG messages in the console / terminal.')
+    
+    else:
+
+        #  Show warning message: 'https://www.geeksforgeeks.org/python/python-tkinter-messagebox-widget/'.
+        tkinter.messagebox.showwarning('Warning', "At least one field is not valid. Please make sure all fields are valid; i.e. 'First name' is not empty, 'Email' is not empty and it has a valid email format.")
+
+    #  Clean entries: 'https://web.archive.org/web/20201111190045id_/https://effbot.org/tkinterbook/entry.htm'.
+    first_name_entry.delete(0, tkinter.END) # pyright: ignore[reportUndefinedVariable]
+    last_name_entry.delete(0, tkinter.END) # pyright: ignore[reportUndefinedVariable]
+    email_entry.delete(0, tkinter.END) # pyright: ignore[reportUndefinedVariable]
+
+    #  Set 1st entry as focus: 'https://stackoverflow.com/questions/13626406/setting-focus-to-specific-tkinter-entry-widget/13626607#13626607'.
+    first_name_entry.focus() # pyright: ignore[reportUndefinedVariable]
+
+#  [FORM] Function to launch form for data collection.
+def UDFFormLaunch():
+
+    #  Create main tkinter window.
+
+    root                    = tkinter.Tk()
+    root.title('Registration form')
+    root.geometry('300x200')            #  Width x height.
+
+    #  Create labels and entry fields, for each input.
+
+    first_name_label        = tkinter.Label(root, text = "First name")
+    first_name_label.pack()     #  Positions widgets in horizontal and vertical boxes that are limited to left, right, top, and bottom positions. Each box is offset and relative to each other.
+    global first_name_entry     #  Declare entry as global, fro 'UDFFormRegister' to access it: 'https://www.w3schools.com/python/python_variables_global.asp'.
+    first_name_entry        = tkinter.Entry(root)
+    first_name_entry.pack()
+
+    last_name_label         = tkinter.Label(root, text = "Last name")
+    last_name_label.pack()
+    global last_name_entry
+    last_name_entry         = tkinter.Entry(root)
+    last_name_entry.pack()
+
+    email_label             = tkinter.Label(root, text = "Email")
+    email_label.pack()
+    global email_entry
+    email_entry             = tkinter.Entry(root)
+    email_entry.pack()
+
+    #  Create Submit Button.
+
+    register_button         = tkinter.Button(root, text = 'Register', command = UDFFormRegister)
+    register_button.pack()
+
+    #  Run the main loop.
+
+    root.mainloop()
 
 #  MAIN FUNCTION.
 def main():
@@ -379,9 +426,7 @@ def main():
     input_user_parameters_dirpath_relative_to_home      = os.path.join(input_dirpath_relative_to_home, 'user_params')   #  Directory for input user instructions, if required.
     input_user_files_dirpath_relative_to_home           = os.path.join(input_dirpath_relative_to_home, 'user_files')    #  Directory for user files, if input required.
 
-    input_configuration_filenames_regex     = _PROJECT_BASE_FILENAME + r'-input_.*\.yaml'           #  String literal for RegEx expresion of configuration filenames patterns; e.g. '...-input-<...>.yaml': 'https://www.w3schools.com/python/python_regex.asp', 'https://regex101.com'. Files listing base variables and their structure; e.g. user timezone, column names for dataframes, etc. NOTE: all matching files will be processed the SAME WAY.
-    # input_user_parameters_filename          = _PROJECT_BASE_FILENAME + r'-input_user_params.csv'    #  File listing variables that require input from user; e.g. copy or cut?, file to read, etc. Usually variables used here, SHOULD BE PRE-DECLARED in a YAML configration file; e.g. in 'py3-song_lyrics_terminal_console_display-v250811-input_config.yaml'.
-    input_user_files_filename_regex         = r'contacts-.*\.csv'                                                     #  String literal for RegEx expresion of user filenames patterns; e.g. 'song_lines-<...>.csv': 'https://www.w3schools.com/python/python_regex.asp', 'https://regex101.com'. NOTE: all matching files will be processed the SAME WAY.
+    input_configuration_filenames_regex     = _PROJECT_BASE_FILENAME + r'-input_.*(?<!-TEMPLATE)\.yaml'                 #  String literal for RegEx expresion of configuration filenames patterns; e.g. '...-input-<...>.yaml': 'https://www.w3schools.com/python/python_regex.asp', 'https://regex101.com'. Files listing base variables and their structure; e.g. user timezone, column names for dataframes, etc. NOTE: it excludes files with text '-TEMPLATE' at the end, before the extension. NOTE: all matching files will be processed the SAME WAY.
 
     #  Output.
     output_dirpath_relative_to_home         = 'io_dir-output'                   #  Dirpath relative to home directory.
@@ -391,7 +436,7 @@ def main():
     #  Print current working directory.
     working_directory = os.getcwd()
     rprint(f"[LOG] Current working directory: '{working_directory}'.")
-
+    
     #  Set working directory to 'home'.
     rprint(f"[LOG] Changing current working directory to: '{home_dirpath}'.")
     os.chdir(home_dirpath)
@@ -420,15 +465,8 @@ def main():
 
     #  Inputs validations: searches for configuration of base variables.
     input_configuration_filepaths_relative_to_home          = UDFSearchPaths(input_configuration_filenames_regex, input_configuration_dirpath_relative_to_home)
-    # #  Inputs validations: searches for user parameters file.
-    # input_user_parameters_filepaths_relative_to_home        = UDFSearchPaths(input_user_parameters_filename, input_user_parameters_dirpath_relative_to_home)
-    #  Inputs validations: searches for user files required as input, besides parameters, using REGEX.
-    input_user_files_filepaths_relative_to_home             = UDFSearchPaths(input_user_files_filename_regex, input_user_files_dirpath_relative_to_home)
-
     rprint(f"[LOG] Configuration files found (x{len(input_configuration_filepaths_relative_to_home)}): '{"' | '".join(input_configuration_filepaths_relative_to_home)}'.")
-    # rprint(f"[LOG] User parameters files found (x{len(input_user_parameters_filepaths_relative_to_home)}): '{"' | '".join(input_user_parameters_filepaths_relative_to_home)}'.")
-    rprint(f"[LOG] User files found (x{len(input_user_files_filepaths_relative_to_home)}): '{"' | '".join(input_user_files_filepaths_relative_to_home)}'.")
-
+    
     #  [INITIALIZATION] INPUT: CONFIGURATION FILE(S) LOAD.
 
     #  Load configuration YAML file.
@@ -455,34 +493,8 @@ def main():
     #  Set execution timezone.
     _TIME_ZONE = zoneinfo.ZoneInfo(_USER_GEOGRAPHIC_TIMEZONE) # pyright: ignore[reportUndefinedVariable]
 
-    #  [INITIALIZATION] INPUT: USER PARAMETERS FILE(S) LOAD.
-
-    #  Load new contacts file; e.g. 'contacts-new.csv'.
-
-    #  Get filenames of user files, using the filepaths relative to home, previously obtained.
-    #  - Using list comprehension: 'https://stackoverflow.com/questions/25082410/apply-function-to-each-element-of-a-list/25082458#25082458', 'https://ellibrodepython.com/list-comprehension-python', 'https://www.geeksforgeeks.org/python/apply-function-to-each-element-of-a-list-python/'.
-    input_user_files_filenames = [os.path.basename(input_user_files_filepath) for input_user_files_filepath in input_user_files_filepaths_relative_to_home]
-    #  Throws an AssertionError, if no path found.
-    assert _USER_NEW_CONTACTS_FILENAME in input_user_files_filenames, f"[ERROR] Input file called '{_USER_NEW_CONTACTS_FILENAME}', should exist in order for current script to run properly." # pyright: ignore[reportUndefinedVariable]
-
-    #  Gets filepaths of contacts new file, defined by developer in variable '_USER_NEW_CONTACTS_FILENAME'.
-    new_contacts_csv_filepaths = list(filter(
-            lambda x : os.path.basename(x) == _USER_NEW_CONTACTS_FILENAME, # pyright: ignore[reportUndefinedVariable]
-            input_user_files_filepaths_relative_to_home
-        )
-    )
-
-    #  Load new contacts CSV file and gets a dictionary with 1. the dataframe.
-    new_contacts_objects_dictionary   = UDFLoadCSVNewContacts(new_contacts_csv_filepaths[0])
-
-    #  Create deepcopy of output from loading song lines CSV.
-    # new_contacts_dataframe          = copy.deepcopy(new_contacts_objects_dictionary['new_contacts_dataframe'])
-    new_contacts_payload          = copy.deepcopy(new_contacts_objects_dictionary['new_contacts_payload'])
-
-    #  [MAIN] HUBSPOT API CONNECTION, via HTTP.
-
-    api_results_create_contacts = UDFHubSpotSendAPIRequest(IApiUrl = _HUBSPOT_API_URL, IApiUrlNode = _HUBSPOT_API_URL_NODE_CONTACTS_BATCHES, IApiToken = _HUBSPOT_API_TOKEN, IApiPayload = new_contacts_payload) # pyright: ignore[reportUndefinedVariable]
-    # rprint(api_results_create_contacts)
+    #  [MAIN] FORM LAUNCH.
+    UDFFormLaunch()
 
 #  CODE EXECUTION.
 
