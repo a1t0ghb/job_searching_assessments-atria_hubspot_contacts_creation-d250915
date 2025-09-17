@@ -294,8 +294,8 @@ def UDFJsonPrint(IObject) -> None:
 
 #  Function to make calls to HubStop API, for either: a. get contacts, b. create a batch of contacts.
 #  - Function depends on API URL node passed as parameter; i.e. 'IApiUrlNode'.
-#    - e.g. IApiUrlNode = 'crm/v3/objects/contacts', is for getting HubSpot account contacts.
-#    - e.g. IApiUrlNode = 'crm/v3/objects/contacts/batch/create', is for creating a batch of contacts; it requires a JSON payload; i.e. 'IApiPayload'.
+#    - e.g. IApiUrlNode = 'crm/v3/objects/contacts', is for getting HubSpot account contacts. Ref. 'https://developers.hubspot.com/docs/api-reference/crm-contacts-v3/basic/get-crm-v3-objects-contacts'.
+#    - e.g. IApiUrlNode = 'crm/v3/objects/contacts/batch/create', is for creating a batch of contacts; it requires a JSON payload; i.e. 'IApiPayload'. Ref. 'https://developers.hubspot.com/docs/api-reference/crm-contacts-v3/batch/post-crm-v3-objects-contacts-batch-create'.
 #  - Function only returns if there are no errors in API connection, and returns a dictionary with JSON response.
 def UDFHubSpotSendAPIRequest(IApiUrl: str, IApiUrlNode: str, IApiToken: str, IApiPayload: dict = {}) -> dict:
     api_results = {}
