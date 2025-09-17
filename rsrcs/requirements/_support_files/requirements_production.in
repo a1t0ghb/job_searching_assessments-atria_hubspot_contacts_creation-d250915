@@ -30,11 +30,8 @@
 # PyYAML
 # datetime
 # # zoneinfo
-# pandas
-# numpy
-# # copy
 # requests
-# # json
+# # tkinter
 
 #  DEPENDENCIES: FOR PRODUCTION (PINNED).
 #  - AFTER finishing development, to pin versions used.
@@ -44,6 +41,4 @@
 rich==14.1.0
 pyyaml==6.0.2
 datetime==5.5
-pandas==2.3.2
-numpy==2.3.3
 requests==2.32.5

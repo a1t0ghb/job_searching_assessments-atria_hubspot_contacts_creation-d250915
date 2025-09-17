@@ -19,27 +19,13 @@ markdown-it-py==4.0.0
     # via rich
 mdurl==0.1.2
     # via markdown-it-py
-numpy==2.3.3
-    # via
-    #   -r rsrcs/requirements/_support_files/requirements_production-pipreqs.in
-    #   pandas
-pandas==2.3.2
-    # via -r rsrcs/requirements/_support_files/requirements_production-pipreqs.in
 pygments==2.19.2
     # via rich
-python-dateutil==2.9.0.post0
-    # via pandas
-pytz==2025.2
-    # via pandas
 pyyaml==6.0.2
     # via -r rsrcs/requirements/_support_files/requirements_production-pipreqs.in
 requests==2.32.5
     # via -r rsrcs/requirements/_support_files/requirements_production-pipreqs.in
 rich==14.1.0
     # via -r rsrcs/requirements/_support_files/requirements_production-pipreqs.in
-six==1.17.0
-    # via python-dateutil
-tzdata==2025.2
-    # via pandas
 urllib3==2.5.0
     # via requests

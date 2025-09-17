@@ -28,6 +28,10 @@
 # pipreqs             #  To create 'requirements' file only from 'import' statements of '.py' files.
 # setuptools
 # rich[jupyter]       #  If intended to use rich with Jupyter: 'https://rich.readthedocs.io/en/stable/introduction.html#installation'.
+# pandas
+# numpy
+# # copy
+# # json
 
 #  DEPENDENCIES: FOR PRODUCTION (PINNED).
 #  - AFTER finishing development, to pin versions used.
@@ -38,3 +42,5 @@ pip-tools==7.5.0
 pipreqs==0.5.0
 #  'setuptools' is considered to be unsafe in a requirements file.
 rich==14.1.0
+pandas==2.3.2
+numpy==2.3.3

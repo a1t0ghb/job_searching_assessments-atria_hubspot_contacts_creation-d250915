@@ -6,15 +6,15 @@
 # sudo apt update && sudo apt -y upgrade && sudo apt autoremove   #  Update distro.
 # pip install --upgrade pip setuptools                            #  Keep pip, and complement updated: 'https://simpleaudio.readthedocs.io/en/latest/installation.html#installation', 'https://stackoverflow.com/questions/41216875/what-is-the-purpose-of-python-setuptools/41217568#41217568'.
 # # pip install os                                                #  Usually built-in module within python; i.e. if so, no need to '$pip install ...'.
-# pip install rich                                                #  See 'rich[jupyter]' comment.
+# pip install rich==14.1.0                                        #  See 'rich[jupyter]' comment.
 # # pip install rich[jupyter]                                     #  Install this, if intended to use rich with Jupyter: 'https://rich.readthedocs.io/en/stable/introduction.html#installation'.
 # # pip install warnings                                          #  Usually built-in module within python; i.e. if so, no need to '$pip install ...'.
 # # pip install glob                                              #  Usually built-in module within python; i.e. if so, no need to '$pip install ...'.
 # # pip install re                                                #  Usually built-in module within python; i.e. if so, no need to '$pip install ...'.
-# pip install PyYAML
-# # pip install datetime                                          #  Usually built-in module within python; i.e. if so, no need to '$pip install ...'.
+# pip install PyYAML==6.0.2
+# # pip install datetime==5.5                                     #  Usually built-in module within python; i.e. if so, no need to '$pip install ...'.
 # # pip install zoneinfo                                          #  Usually built-in module within python; i.e. if so, no need to '$pip install ...'.
-# pip install requests
+# pip install requests==2.32.5
 # # pip install tkinter                                           #  Usually built-in module within python; i.e. if so, no need to '$pip install ...'.
 
 #  LIBRARIES / PACKAGES IMPORTS.

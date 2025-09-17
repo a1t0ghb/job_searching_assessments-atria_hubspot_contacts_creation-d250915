@@ -99,10 +99,16 @@ nbformat==5.10.4
     # via
     #   nbclient
     #   nbconvert
+numpy==2.3.3
+    # via
+    #   -r rsrcs/requirements/_support_files/requirements_development.in
+    #   pandas
 packaging==25.0
     # via
     #   build
     #   nbconvert
+pandas==2.3.2
+    # via -r rsrcs/requirements/_support_files/requirements_development.in
 pandocfilters==1.5.1
     # via nbconvert
 parso==0.8.5
@@ -135,8 +141,12 @@ pyproject-hooks==1.2.0
     #   pip-tools
 python-dateutil==2.9.0.post0
     # via
-    #   -c rsrcs/requirements/requirements_production.txt
     #   jupyter-client
+    #   pandas
+pytz==2025.2
+    # via
+    #   -c rsrcs/requirements/requirements_production.txt
+    #   pandas
 pyzmq==27.1.0
     # via jupyter-client
 referencing==0.36.2
@@ -156,9 +166,7 @@ rpds-py==0.27.1
     #   jsonschema
     #   referencing
 six==1.17.0
-    # via
-    #   -c rsrcs/requirements/requirements_production.txt
-    #   python-dateutil
+    # via python-dateutil
 soupsieve==2.8
     # via beautifulsoup4
 stack-data==0.6.3
@@ -181,6 +189,8 @@ typing-extensions==4.15.0
     # via
     #   beautifulsoup4
     #   referencing
+tzdata==2025.2
+    # via pandas
 urllib3==2.5.0
     # via
     #   -c rsrcs/requirements/requirements_production.txt

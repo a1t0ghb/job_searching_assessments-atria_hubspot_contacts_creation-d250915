@@ -1,6 +1,17 @@
 # 🚧 TODO 🚧
 
 - Rebuild WHOLE document; i.e. review process, rewrite commands, review files structure, etc.
+- Updated commands, run from **root folder**; e.g. '/workspaces/job_searching_assessments-atria_hubspot_contacts_creation-d250915'.
+
+```bash
+# [root folder]
+
+pipreqs --savepath='rsrcs/requirements/_support_files/requirements_production-pipreqs.in' '.'  # scans 'py3-atria_hubspot_contacts_creation.py', since it runs on root folder.
+pip-compile -o 'rsrcs/requirements/requirements_production-pipreqs.txt' 'rsrcs/requirements/_support_files/requirements_production-pipreqs.in' --strip-extras
+pip-compile -o 'rsrcs/requirements/requirements_production.txt' 'rsrcs/requirements/_support_files/requirements_production.in' --strip-extras
+pip-compile -o 'rsrcs/requirements/requirements_development.txt' 'rsrcs/requirements/_support_files/requirements_development.in' --strip-extras
+pip freeze > './rsrcs/requirements/requirements_development-pip_freeze.txt'
+```
 
 # MANAGING DEPENDENCIES AND CREATING **'requirements.txt'** FILES.
 
