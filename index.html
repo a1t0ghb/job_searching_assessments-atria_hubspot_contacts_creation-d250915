@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- Semantic tags: 'https://www.semrush.com/blog/semantic-html5-guide/', 'https://developer.mozilla.org/en-US/docs/Glossary/Semantics#semantic_elements'. -->
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>HubSpot - New Contact</title>
+        <!--
+        External CSS stylesheet: 'https://www.w3schools.com/html/html_css.asp', 'https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/link'.
+        - In this case, PyScript CSS.
+        -->
+        <link rel="stylesheet" href="https://pyscript.net/releases/2025.8.1/core.css" />
+        <!-- External (local) CSS stylesheet. -->
+        <link rel="stylesheet" href="./rsrcs/styles/style.css">
+        <!-- TODO: include custom css; e.g. '<link rel="stylesheet" href="./styles/style.css">'. Reference multiple external CSS links: 'https://www.programminghead.com/how-to-link-multiple-css-style-sheets-in-html'. -->
+        <!--
+        Script call; e.g. this js script tag bootstraps PyScript.
+        - NOTE: threated as deferred script. Ref. 'https://stackoverflow.com/questions/436411/where-should-i-put-script-tags-in-html-markup/24070373#24070373'.
+        -->
+        <script type="module" src="https://pyscript.net/releases/2025.8.1/core.js"></script>
+        <!--
+        Good practice for loading scripts: place them in 'head' and use attribute 'defer' or 'async', according to needs. References:
+        - Where to put script tag: 'https://forum.freecodecamp.org/t/where-is-it-advisable-to-put-the-script-tag/439118'.
+        - Bases of script tag: 'https://www.w3schools.com/js/js_whereto.asp'.
+        - Best practices: 'https://stackoverflow.com/questions/436411/where-should-i-put-script-tags-in-html-markup/24070373#24070373'.
+        - 'async' vs. 'defer': 'https://stackoverflow.com/questions/10808109/script-tag-async-defer', 'https://dev.to/fidalmathew/async-vs-defer-in-javascript-which-is-better-26gm'.
+        -->
+        <!-- Python script call: 'type="py"' attribute tells BROWSER to use PyScript. -->
+        <!-- <script type="py" src="./rsrcs/functionalities/main.py" config="./rsrcs/imports/pyscript.json" defer></script> -->
+    </head>
+    <body>
+        <header class="header">
+            <nav class="header-menu">
+                <!-- Tag 'a' to open link in a new window or tab: 'https://www.w3schools.com/tags/att_a_target.asp'. -->
+                <a class="header-menu-link_home" href="https://www.hubspot.com/" target="_blank">HubSpot</a>
+                <a class="header-menu-link" href="./index.html">Create Contact</a>
+            </nav>
+        </header>
+        <main class="main">
+            <!-- 'div' to organize layout, without semantic meaning: 'https://stackoverflow.com/questions/6939864/what-is-the-difference-between-section-and-div/6941170#6941170'. -->             
+            <div class="main-upper">
+                <section class="main-upper-parameters">
+                    <h1 class="main-upper-parameters-title">Parameters</h1>
+                    <div class="main-upper-parameters-content">
+                        <div class="main-upper-parameters-content-input_labels">
+                            <!-- 'for' attribute binds label to element, by it's ID: 'https://www.w3schools.com/tags/tag_label.asp'. -->
+                            <label for="input_api_token">HubsPot API Token:</label>
+                            <label for="input_user_name">New Contact's Name:</label>
+                            <label for="input_user_last_name">New Contact's Last Name:</label>
+                            <label for="input_user_email">New Contact's Email:</label>
+                        </div>
+                        <div class="main-upper-parameters-content-input_boxes">
+                            <!-- 'id' vs. 'name' attributes in form elements: 'https://teamtreehouse.com/community/what-is-the-difference-between-id-and-name-attributes-in-form-elements', 'https://stackoverflow.com/questions/1397592/difference-between-id-and-name-attributes-in-html/1397618#1397618', 'https://www.dhiwise.com/post/input-name-vs-id-understanding-the-key-differences-in-html', 'https://stackoverflow.com/questions/7470268/html-input-name-vs-id/7470325#7470325'. -->
+                            <input class="main-upper-parameters-input_boxes-_default" type="password" id="input_api_token" name="api_token" placeholder="Type your HubSpot API Token here..." required />
+                            <input class="main-upper-parameters-input_boxes-_default" type="text" id="input_user_name" name="user_name" placeholder="Type new contact's name here..." required />
+                            <input class="main-upper-parameters-input_boxes-_default" type="text" id="input_user_last_name" name="user_last_name" placeholder="Type new contact's last name here..." />
+                            <input class="main-upper-parameters-input_boxes-_default" type="email" id="input_user_email" name="user_email" placeholder="Type new contact's email here..." required />
+                        </div>
+                    </div>
+                    <div class="main-upper-parameters-button_create_contact__container">
+                        <!-- 'py-click' attribute indicates which (python) FUNCTION to call. Ref.: 'https://docs.pyscript.net/2025.8.1/api/#html-attributes'. -->
+                        <button py-click="UDFCreateContact" class="main-upper-parameters-button_create_contact">Create Contact</button>
+                    </div>
+                </section>
+                <section class="main-upper-contacts">
+                    <h1 class="main-upper-contacts-title">Contacts</h1>
+                    <!-- 'div' for listing contacts. 'div' instead of 'p', since it has no semantic meaning; it's for graphic layouts. -->
+                    <div class="main-upper-contacts-show" id="output_contacts">[CONTACTS LIST]</div>
+                </section>
+            </div>
+            <div class="main-lower">
+                <section class="main-lower-log">
+                    <div class="main-lower-log-show__container">
+                        <!-- 'div' for log output. 'div' instead of 'p', since it has no semantic meaning; it's for graphic layouts. -->
+                        <div class="main-lower-log-show" id="output_log">[LOG]</div>
+                    </div>
+                </section>
+            </div>
+        </main>
+        <footer class="footer">
+            <p>Desarrollado por: a1t0ghb | <a href="https://github.com/a1t0ghb" target="_blank">https://github.com/a1t0ghb</a> | <a href="mailto:js101@a1t0.aleeas.com" target="_blank">js101@a1t0.aleeas.com</a></p>
+        </footer>
+    </body>
+</html>

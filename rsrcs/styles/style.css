@@ -1,0 +1,194 @@
+/* IMPORTS. */
+
+/*
+IMPORTS - FONTS.
+Google Fonts:
+- 'Krona One':
+    - URL:          'https://fonts.google.com/specimen/Krona+One'.
+    - Specs:        Weight: regular 400.
+- 'Montserrat':
+    - URL:          'https://fonts.google.com/specimen/Montserrat'.
+    - Specs:        Weight: regular 400. Italic: Roman-only (no italic included).
+*/
+@import url('https://fonts.googleapis.com/css2?family=Krona+One&family=Montserrat&display=swap');
+
+/*
+VARIABLES DECLARATION.
+- variable's name MUST BEGIN with 2 dashes (--), and it's CASE SENSITIVE.
+- Scopes:
+    - Global scope: declare within ':root' selector.
+    - Local scope: declare variable within specific selector, not in ':root'.
+- Ref.: 'https://www.w3schools.com/css/css3_variables.asp'.
+*/
+:root {
+    --font_size_default: 16px;          /* Default web-browsers font-size: 'https://stackoverflow.com/questions/29511983/is-the-default-font-size-of-every-browser-16px-why/29512572#29512572'. */
+    --colors_logo: #FF4800;
+    --colors_background: #0D1117;
+    --colors_01: #F6F6F6;
+    --colors_02: #CCDAD1;
+    --colors_03: #D5168A;
+    --colors_04: #501555;
+    --colors_05: #1F143F;
+    --colors_06: #1F2428;
+    --fonts_main: "Montserrat", sans-serif;
+    --fonts_minor: "Krona One", sans-serif;
+}
+
+/* Universal changes for all tags / elements / classes */
+* {
+    /* Set proper dimensions for full page size: 'https://www.freecodecamp.org/news/html-page-width-height/'. */
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;                         /* Set appropiate box-sizing: 'https://www.w3schools.com/css/css3_box-sizing.asp'. */
+}
+
+/* DEFAULT HTML TAGS. */
+
+/* Recommended, explicit declaration: 'https://stackoverflow.com/questions/29511983/is-the-default-font-size-of-every-browser-16px-why/29512572#29512572'. */
+html {
+    font-size: var(--font_size_default);
+}
+
+body {
+    background-color: var(--colors_background);
+    color: var(--colors_01);
+    /* Make 'footer' stay at the bottom, by expanding 'main': 'https://stackoverflow.com/questions/643879/css-to-make-html-page-footer-stay-at-bottom-of-the-page-with-a-minimum-height-b/20352949#20352949'. */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;                              /* Change height display to MINIMUM 100% of VISIBLE screen. */
+}
+
+main {
+    /* Make 'footer' stay at the bottom, by expanding 'main': 'https://stackoverflow.com/questions/643879/css-to-make-html-page-footer-stay-at-bottom-of-the-page-with-a-minimum-height-b/20352949#20352949'. */
+    flex-grow: 1;
+}
+
+/* Use of 'media queries' to define layouts according to specific screen resolutions: 'https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries#targeting_media_features'. */
+@media (width > 0px) {                              /* Base design, as starting point: e.g. for desktop, although recommended to start with mobile, 1st: 'https://stackoverflow.com/questions/6370690/media-queries-how-to-target-desktop-tablet-and-mobile/20350990#20350990'. */
+    
+    /* CUSTOM CLASSES. */
+
+    .header {
+        padding: 2% 3% 0% 3%;                       /* Padding: [top], [right], [bottom], [left]. Ref.: 'https://www.w3schools.com/css/css_padding.asp' */
+    }
+
+    .header-menu {
+        /* Display as flexbox: 'https://css-tricks.com/snippets/css/a-guide-to-flexbox/'. */
+        display: flex;                              /* Flexbox: 'flex', or 'inline-flex'. Ref.: 'https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-display'. */
+        gap: 20px;                                  /* Space between flexbox items, EXCLUSIVELY: 'https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-gap-row-gap-column-gap'. */
+    }
+
+    .header-menu-link_home {
+        color: var(--colors_logo);
+        font-family: var(--fonts_minor);
+        font-size: 1rem;
+        text-decoration: none;                      /* To eliminate underscore format for hyperlinks. */
+    }
+
+    .header-menu-link {
+        color: var(--colors_03);
+        font-family: var(--fonts_minor);
+        font-size: 1rem;
+        text-decoration: none;
+    }
+
+    .main {
+        padding: 2% 3% 2% 3%;
+    }
+
+    .main-upper {
+        display: flex;
+        gap: 20px;
+    }
+
+    .main-upper-parameters {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .main-upper-parameters-title {
+        font-family: var(--fonts_minor);
+        font-size: 1.2rem;
+        padding: 0px 0px 10px 0px;
+    }
+
+    .main-upper-parameters-content {
+        display: flex;
+    }
+
+    .main-upper-parameters-content-input_labels {
+        display: flex;
+        flex-direction: column;
+        font-family: var(--fonts_main);
+        gap: 5px;
+        padding: 0px 20px 0px 0px;
+    }
+
+    .main-upper-parameters-content-input_boxes {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        width: 250px;
+    }
+
+    .main-upper-parameters-button_create_contact__container {
+        /* Center a 'div': 'https://www.aluracursos.com/blog/centrar-un-elemento-con-css'. */
+        margin-left: auto;
+        margin-right: auto;
+        padding: 10px 0px 0px 0px;
+    }
+
+    .main-upper-parameters-button_create_contact {
+        font-family: var(--fonts_minor);
+        font-size: 0.9rem;
+        padding: 5px 30px 5px 30px;
+    }
+
+    .main-upper-contacts {
+        flex-grow: 1;                               /* Expand last flex child size: 'https://stackoverflow.com/questions/37745051/fill-the-remaining-height-or-width-in-a-flex-container/37751019#37751019'. */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .main-upper-contacts-title {
+        font-family: var(--fonts_minor);
+        font-size: 1.2rem;
+        padding: 0px 0px 10px 0px;
+    }
+
+    .main-upper-contacts-show {
+        background-color: var(--colors_06);
+        color: var(--colors_02);
+        font-family: var(--fonts_main);
+        font-size: 0.8rem;
+        padding: 10px;
+    }
+
+    /* .main-lower {
+    } */
+
+    /* .main-lower-log {
+    } */
+    
+    .main-lower-log-show__container {
+        padding: 10px 0px 0px 0px;
+    }
+
+    .main-lower-log-show {
+        background-color: var(--colors_06);
+        color: var(--colors_02);
+        font-family: var(--fonts_main);
+        font-size: 0.8rem;
+        padding: 10px;
+    }
+
+    .footer {
+        background-color: var(--colors_04);
+        color: var(--colors_01);
+        font-family: var(--fonts_main);
+        font-size: 1rem;
+        text-align: center;
+        padding: 15px;
+    }
+
+}
