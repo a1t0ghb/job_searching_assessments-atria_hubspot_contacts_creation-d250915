@@ -166,3 +166,4 @@ pip install --requirement 'requirements_prod.txt' # To install requirements in p
 - Run `$ pip freeze > 'requirements/requirements_freeze.txt'` to use it as REFERENCE / COMPLEMENT ONLY, if there are any issues with **'requirements_prod.txt'** or **'requirements_dev.txt'**.
 
 > **NOTE:** remember **'pip freeze'** has several 'disadvantages' such as a) it only saves packages that are installed with **'pip install'**, and b) it saves ALL packages that are currently installed in the environment, even if they are not imported / used in your current project. Ref.: '<https://github.com/bndr/pipreqs?tab=readme-ov-file#why-not-pip-freeze>'.
+<!--  EOF. -->

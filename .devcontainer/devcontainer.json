@@ -19,7 +19,8 @@
 		"vscode": {
 			"extensions": [
 				"ms-toolsai.jupyter",
-				"ms-toolsai.datawrangler"
+				"ms-toolsai.datawrangler",
+                "ms-vscode.live-server"
 			]
 		}
 	},
