@@ -1,0 +1,35 @@
+/* Use of 'media queries' to define layouts according to specific screen resolutions: 'https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries#targeting_media_features'. */
+@media (width > 0px) {                              /* Base design, as starting point: e.g. for desktop, although recommended to start with mobile, 1st: 'https://stackoverflow.com/questions/6370690/media-queries-how-to-target-desktop-tablet-and-mobile/20350990#20350990'. */
+
+    /* CUSTOM CLASSES. */
+    
+    /*
+    Loading splashscreen: 'modal' dialog; i.e. dialog that locks user interactivity.
+    - IMPORTANT: be careful with stylings in dialogs! They have 2 STYLE-INDEPENDENT STATES; visible (open) AND hidden (close).
+    - Ref.: 'https://dev.to/mayashavin/making-dialog-with-html-dialog-element-1lpp', 'https://css-tricks.com/some-hands-on-with-the-html-dialog-element/'.
+    - Set styles independently, or un-expected behaviours will happen: 'https://stackoverflow.com/questions/60365510/html5-dialog-element-close-button-not-working-properly/72161395#72161395'.
+    */
+    #dialog_loading[open] {
+        padding: 20px;                              /* Adjusting padding (i.e. IMMEDIATE space around text), if setting 'padding: 0;' in all html elements; i.e. in CSS '* { padding: 0; }'. */
+        background-color: rgb(0 0 0 / 0.75);      /* Make a box semi-transparent: 'https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Solve_CSS_problems/Make_box_transparent'.*/
+        color: #B2B2B2;                           /* If setting a 'dark theme' for the body; i.e. in CSS 'body { background-color: var(--colors_background); color: var(--colors_01); }', to match theme. 'dialog' elements do not inherit properties from 'html' and child elements, like 'body'. */
+        outline: none;
+        border: none;
+        
+        /* DIALOG BORDER: adjustment, iff setting 'margin: 0;' in all html elements; i.e. in CSS '* { margin: 0; }'. */
+
+        /* OP01: set auto margins; restores default margin so it's centered: 'https://stackoverflow.com/questions/73925255/how-can-the-html-dialog-element-be-positioned-according-to-normal-flow-when-op/77652902#77652902'. */
+        /*margin: auto;*/
+        /* OP02: manual adjustment. */
+        margin-top: 3vh;                            /* Custom / own definition of 3% of margin, before rendering dialog border (Vertically, from top to bottom). */
+        margin-left: 3vw;                           /* Custom / own definition of 3% of margin, before rendering dialog border (Horizontally, from left to rigth). */
+        height: 94vh;                               /* 94% viewport height, to match 97% (100% - 3% custom) = 97% - 3% top. */
+        width: 94vw;                                /* 94% viewport width, to match 97% (100% - 3% custom) = 97% - 3% top. */
+        
+        /* Perfect centering, using flexbox: 'https://www.w3schools.com/css/css3_flexbox_container.asp'. */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+}

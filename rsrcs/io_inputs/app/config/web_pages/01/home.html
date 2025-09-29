@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- Semantic tags: 'https://www.semrush.com/blog/semantic-html5-guide/', 'https://developer.mozilla.org/en-US/docs/Glossary/Semantics#semantic_elements'. -->
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- Window title. -->
+        <title>HubSpot Contacts Creation</title>
+        <!-- Window logo. Goes up x5 folder levels to get to 'media' ([CURRENT DIR.] < web_pages < config < app < io_inputs < rsrcs > media), where it's stored. -->
+        <link rel="icon" type="image/png" href="./../../../../../media/icon-favicon.png" />
+        <!--
+        External CSS stylesheet: 'https://www.w3schools.com/html/html_css.asp', 'https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/link'.
+        - In this case, PyScript CSS.
+        -->
+        <link rel="stylesheet" href="https://pyscript.net/releases/2025.8.1/core.css" />
+        <!-- External (local) CSS stylesheet, with ultiple external CSS links. ORDER MATTERS! 'https://www.programminghead.com/how-to-link-multiple-css-style-sheets-in-html'. -->
+        <link rel="stylesheet" href="./../loading_splashscreen_(style).css">
+        <link rel="stylesheet" href="./../style.css">
+        <!--
+        Script call; e.g. this js script tag bootstraps PyScript.
+        - NOTE: threated as deferred script. Ref. 'https://stackoverflow.com/questions/436411/where-should-i-put-script-tags-in-html-markup/24070373#24070373'.
+        -->
+        <script type="module" src="https://pyscript.net/releases/2025.8.1/core.js"></script>
+        <!--
+        JS script call: (module) loading splashscreen.
+        - If 'type' not defined, defaults to 'text/javascript': 'https://www.w3schools.com/tags/att_script_type.asp'.
+        - For HTML 5, if default, discouraged to be explicit, since it's redundant: 'https://stackoverflow.com/questions/4195427/is-the-type-attribute-necessary-for-script-tags/4195504#4195504'.
+        - 'type' module: 'https://forum.freecodecamp.org/t/the-type-module-in-html-file-whats-for/488865', 'https://stackoverflow.com/questions/39652618/classic-scripts-vs-module-scripts-in-javascript/53821485#53821485'.
+        - 'module' scripts: 'https://neerajdana.medium.com/understanding-type-module-in-javascript-a-comprehensive-guide-ebb13926da7a'.
+        - 'module' vs. 'non-module' scripts: 'https://neerajdana.medium.com/understanding-type-module-in-javascript-a-comprehensive-guide-ebb13926da7a'.
+        -->
+        <script type="module" src="./../loading_splashscreen_(app).js"></script>
+        <!-- Fallback call to PyScript script to trigger 'py:ready' event, in case there are no PyScript scripts in the page. -->
+        <script type="py" defer></script>
+        <!--
+        Good practice for loading scripts: place them in 'head' and use attribute 'defer' or 'async', according to needs. References:
+        - Where to put script tag: 'https://forum.freecodecamp.org/t/where-is-it-advisable-to-put-the-script-tag/439118'.
+        - Bases of script tag: 'https://www.w3schools.com/js/js_whereto.asp'.
+        - Best practices: 'https://stackoverflow.com/questions/436411/where-should-i-put-script-tags-in-html-markup/24070373#24070373'.
+        - 'async' vs. 'defer': 'https://stackoverflow.com/questions/10808109/script-tag-async-defer', 'https://dev.to/fidalmathew/async-vs-defer-in-javascript-which-is-better-26gm'.
+        - 'async' vs. 'defer' vs. 'module': 'https://dev.to/zacharylee/html-script-element-attributes-async-vs-defer-vs-typemodule-5h6j'.
+        -->
+        <!-- Python script call: 'type="py"' attribute tells BROWSER to use PyScript. -->
+        <!-- <script type="py" src="./../../imports/hubspot_contacts_creation_launcher.py" config="./../../imports/hubspot_contacts_creation_launcher_(pyscript).json" defer></script> -->
+    </head>
+    <body>
+        <!-- Main dialog (as 'modal', defined in js module 'loading_splashscreen_(app).js'), what appears 1st as soon as web page is loaded. -->
+        <dialog id="dialog_loading">
+            <h1>Loading...</h1>
+        </dialog>
+        <header class="header">
+            <nav class="header-nav">
+                <div class="header-nav-container_left">
+                    <a class="header-nav-container_left-hyperlink_logo" href="https://www.hubspot.com/" target="_blank">
+                        <b>HubSpot</b>
+                        <!-- <img class="header-nav-container_left-hyperlink_logo-img_logo" src="./../../../../../media/img-logo.png" /> -->
+                    </a>
+                    <div class="header-nav-container_left-container_links">
+                        <a class="header-nav-container_left-container_links-link" href="./../01/home.html"><b>HOME</b></a>
+                        <a class="header-nav-container_left-container_links-link" href="./../02/create_contact.html">Create Contact</a>
+                    </div>
+                </div>
+                <div class="header-nav-container_links">
+                    <!-- '/' in 'href' redirects to ROOT vs. '#' that redirects to TOP of CURRENT PAGE (causing scrolling): 'https://stackoverflow.com/questions/17772692/what-does-it-means-when-there-is-fowards-slash-after-a-href/17772747#17772747', 'https://www.w3schools.com/tags/att_a_href.asp'. -->
+                    <a class="header-nav-container_links-link" href="/">[GOTO ROOT]</a>
+                    <!-- Blank 'href' REFRESH CURRENT PAGE; i.e. act as hyperlink to CURRENT PAGE: 'https://stackoverflow.com/questions/4855168/what-is-href-and-why-is-it-used/21397285#21397285'. -->
+                    <a class="header-nav-container_links-link" href="">[Refresh Current Page]</a>
+                    <a class="header-nav-container_links-link" href="#">[GOTO TOP]</a>
+                </div>
+            </nav>
+        </header>
+        <main class="main">
+        </main>
+        <footer class="footer">
+            <p>Developed by: a1t0ghb | <a href="https://github.com/a1t0ghb" target="_blank">https://github.com/a1t0ghb</a> | <a href="mailto:js101@a1t0.aleeas.com" target="_blank">js101@a1t0.aleeas.com</a></p>
+        </footer>
+    </body>
+</html>
