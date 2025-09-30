@@ -29,9 +29,9 @@
         - 'module' scripts: 'https://neerajdana.medium.com/understanding-type-module-in-javascript-a-comprehensive-guide-ebb13926da7a'.
         - 'module' vs. 'non-module' scripts: 'https://neerajdana.medium.com/understanding-type-module-in-javascript-a-comprehensive-guide-ebb13926da7a'.
         -->
-        <!-- <script type="module" src="./../loading_splashscreen_(app).js"></script> -->
+        <script type="module" src="./../loading_splashscreen_(app).js"></script>
         <!-- Fallback call to PyScript script to trigger 'py:ready' event, in case there are no PyScript scripts in the page. -->
-        <!-- <script type="py" defer></script> -->
+        <script type="py" defer></script>
         <!--
         Good practice for loading scripts: place them in 'head' and use attribute 'defer' or 'async', according to needs. References:
         - Where to put script tag: 'https://forum.freecodecamp.org/t/where-is-it-advisable-to-put-the-script-tag/439118'.
@@ -75,20 +75,52 @@
                 <section class="main-top-parameters">
                     <h3>Parameters</h3>
                     <div class="main-top-parameters-content">
-                        <div class="main-top-parameters-content-input_labels">
+                        <div class="main-top-parameters-content-row">
+                            <div class="main-top-parameters-content-row-column main-top-parameters-content-row-column_labels">
+                                <label for="input_api_token">HubsPot API Token:</label>
+                            </div>
+                            <div class="main-top-parameters-content-row-column main-top-parameters-content-row-column_inputs">
+                                <input type="password" id="input_api_token" name="api_token" placeholder="HubSpot API Token here..." required />
+                            </div>
+                        </div>
+                        <div class="main-top-parameters-content-row">
+                            <div class="main-top-parameters-content-row-column main-top-parameters-content-row-column_labels">
+                                <label for="input_user_name">New Contact's Name:</label>
+                            </div>
+                            <div class="main-top-parameters-content-row-column main-top-parameters-content-row-column_inputs">
+                                <input type="text" id="input_user_name" name="user_name" placeholder="New contact's name here..." required />
+                            </div>
+                        </div>
+                        <div class="main-top-parameters-content-row">
+                            <div class="main-top-parameters-content-row-column main-top-parameters-content-row-column_labels">
+                                <label for="input_user_last_name">New Contact's Last Name:</label>
+                            </div>
+                            <div class="main-top-parameters-content-row-column main-top-parameters-content-row-column_inputs">
+                                <input type="text" id="input_user_last_name" name="user_last_name" placeholder="New contact's last name here..." />
+                            </div>
+                        </div>
+                        <div class="main-top-parameters-content-row">
+                            <div class="main-top-parameters-content-row-column main-top-parameters-content-row-column_labels main-top-parameters-content-row-column_last">
+                                <label for="input_user_email">New Contact's Email:</label>
+                            </div>
+                            <div class="main-top-parameters-content-row-column main-top-parameters-content-row-column_inputs main-top-parameters-content-row-column_last">
+                                <input type="email" id="input_user_email" name="user_email" placeholder="New contact's email here..." required />
+                            </div>
+                        </div>
+                        <!-- <div class="main-top-parameters-content-input_labels"> -->
                             <!-- 'for' attribute binds label to element, by it's ID: 'https://www.w3schools.com/tags/tag_label.asp'. -->
-                            <label for="input_api_token" class="main-top-parameters-content-input_labels-label">HubsPot API Token:</label>
+                            <!-- <label for="input_api_token" class="main-top-parameters-content-input_labels-label">HubsPot API Token:</label>
                             <label for="input_user_name" class="main-top-parameters-content-input_labels-label">New Contact's Name:</label>
                             <label for="input_user_last_name" class="main-top-parameters-content-input_labels-label">New Contact's Last Name:</label>
                             <label for="input_user_email" class="main-top-parameters-content-input_labels-label">New Contact's Email:</label>
                         </div>
-                        <div class="main-top-parameters-content-input_boxes">
+                        <div class="main-top-parameters-content-input_boxes"> -->
                             <!-- 'id' vs. 'name' attributes in form elements: 'https://teamtreehouse.com/community/what-is-the-difference-between-id-and-name-attributes-in-form-elements', 'https://stackoverflow.com/questions/1397592/difference-between-id-and-name-attributes-in-html/1397618#1397618', 'https://www.dhiwise.com/post/input-name-vs-id-understanding-the-key-differences-in-html', 'https://stackoverflow.com/questions/7470268/html-input-name-vs-id/7470325#7470325'. -->
-                            <input class="main-top-parameters-content-input_boxes-box" type="password" id="input_api_token" name="api_token" placeholder="HubSpot API Token here..." required />
+                            <!-- <input class="main-top-parameters-content-input_boxes-box" type="password" id="input_api_token" name="api_token" placeholder="HubSpot API Token here..." required />
                             <input class="main-top-parameters-content-input_boxes-box" type="text" id="input_user_name" name="user_name" placeholder="New contact's name here..." required />
                             <input class="main-top-parameters-content-input_boxes-box" type="text" id="input_user_last_name" name="user_last_name" placeholder="New contact's last name here..." />
                             <input class="main-top-parameters-content-input_boxes-box" type="email" id="input_user_email" name="user_email" placeholder="New contact's email here..." required />
-                        </div>
+                        </div> -->
                     </div>
                     <div class="main-top-parameters-container_button">
                         <!-- 'py-click' attribute indicates which (python) FUNCTION to call. Ref.: 'https://docs.pyscript.net/2025.8.1/api/#html-attributes'. -->

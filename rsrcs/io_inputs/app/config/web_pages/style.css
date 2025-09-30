@@ -170,31 +170,49 @@ ul {
         gap: 16px;                                      /* Separates sections: parameters title, content and 'div' for button. Same SPACING as page links in header. */
     }
 
-    .main-top-parameters-content {
-        display: flex;
-    }
-    
-    .main-top-parameters-content-input_labels {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
+    /* .main-top-parameters-content { */
         /*background-color: #501555;*/                    /* FOR TESTING SPACING. */
-        padding-right: 40px;
+    /* } */
+
+    .main-top-parameters-content-row {
+        /* Create table-like row-column (nx2) layout with Flexbox: 'https://dev.to/drews256/ridiculously-easy-row-and-column-layouts-with-flexbox-1k01'. */
+        display: flex;
+        flex-direction: row;                            /* Default: 'https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-flex-direction'. */
+        flex-wrap: wrap;                                /* When shrinking, wrap onto multiple lines; e.g. column stack, instead of staying on 1 line: 'https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-flex-wrap'. */
+        width: 100%;                                    /* Width 100% of PARENT element; i.e. '.main-top-parameters-content'. */
     }
 
-    /* .main-top-parameters-content-input_labels-label {
-    } */
-
-    .main-top-parameters-content-input_boxes {
+    .main-top-parameters-content-row-column {
+        /* Create table-like row-column (nx2) layout with Flexbox: 'https://dev.to/drews256/ridiculously-easy-row-and-column-layouts-with-flexbox-1k01'. */
         display: flex;
         flex-direction: column;
-        gap: 8px;
-        width: 256px;
+        flex: 1;                                        /* Sets x3 flex item properties: 'flex-grow: 1', 'flex-shrink: 1', 'flex-basis: 0%'. Ref. 'https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-flex'. Since all 'columns' (more like 'cells') will have 'flex-grow: 1', they will expand EQUALLY proportionally; i.e. 50% if 2 columns, 33% if 3, etc. */
+
+        margin-bottom: 8px;                             /* Separate 'cells'. Half SPACING as page links in header.*/
     }
 
-    .main-top-parameters-content-input_boxes-box {
+    /*
+    By following structure of table-like row-column (nx2) layout with Flexbox, columns width is determined by 1st column with items with a FIXED width;
+    e.g. input boxes have a default width, which will represent the 50% of the columns width distribution (i.e. 'flex-grow: 1' in PARENT element), and consequently the other 50% (labels) will have same width.
+    - To adjust widths, PLAY / TRIAL and ERROR, with 'width' property in both columns. NOTE: 'margin' and 'padding' properties seem to NOT affect width 'propagation' in other columns.
+    */
+    .main-top-parameters-content-row-column_labels {
+        /*background-color: #501555;*/                    /* FOR TESTING SPACING. */
+        min-width: 209px;                               /* Min. width for LONGEST text (i.e. 'New Contact's Last Name:') to be in 1 LINE. DO NOT CONSIDER SPACING (margin or padding). */
+        margin-right: 40px;                             /* Appropiate right-SPACING (margin or padding), to separate LONGEST label, from input box. */
+    }
+
+    .main-top-parameters-content-row-column_inputs {
+        min-width: 272px;                               /* Appropiate width for reading LONGEST input placeholder (i.e. 'New contact's last name here...'). */
+    }
+
+    input {
         font-family: var(--fonts_main);
         font-size: 1rem;
+    }
+
+    .main-top-parameters-content-row-column_last {
+        margin-bottom: 0px;                             /* Adjusts last 'cell' SPACING (from 'margin-bottom: 8px;', of '.main-top-parameters-content-row-column'), since upper-parent '.main-top-parameters', already has it; e.g. 'gap: 16px'. */
     }
     
     .main-top-parameters-container_button {
@@ -211,6 +229,8 @@ ul {
         font-size: 1rem;
         /*background-color: #501555;*/                    /* FOR TESTING SPACING. */
         padding: 6px 32px 6px 32px;                     /* SPACING (margin or padding, depending on each case) adjusted for button display. Padding: [top], [right], [bottom], [left]. Ref.: 'https://www.w3schools.com/css/css_padding.asp'. */
+        background-color: var(--colors_04);
+        color: var(--colors_01);
     }
 
     /* MAIN: content (contacts). */
