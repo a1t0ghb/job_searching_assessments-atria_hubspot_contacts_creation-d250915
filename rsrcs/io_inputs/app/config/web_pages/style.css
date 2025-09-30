@@ -41,9 +41,12 @@ VARIABLES DECLARATION.
 
 /* Universal changes for all tags / elements / classes. */
 * {
-    /* Set proper dimensions for full page size: 'https://www.freecodecamp.org/news/html-page-width-height/'. */
-    padding: 0;
+    /*
+    Set proper dimensions for full page size: 'https://www.freecodecamp.org/news/html-page-width-height/'.
+    - IMPORTANT: when adjusting spacing of specific classes, try 1st adjusting 'margin', then 'padding' as LAST RESOURCE. Evaluate in a per case basis, using helper of 'background-color: <contrasting_color>'.
+    */
     margin: 0;
+    padding: 0;
     box-sizing: border-box;                             /* Set appropiate box-sizing: 'https://www.w3schools.com/css/css3_box-sizing.asp'. */
 }
 
@@ -69,6 +72,10 @@ main {
     flex-grow: 1;
 }
 
+h3 {
+    font-family: var(--fonts_minor);
+}
+
 ul {
     padding: 10px 0px 0px 20px !important;              /* IMPORTANT: lists REQUIRE PADDING; therefore, need manual adjustment, if padding set GLOBALLY to 0; i.e. '* { padding: 0; }'. Ref.: 'https://stackoverflow.com/questions/72279264/unordered-list-not-showing-bullets/72281511#72281511', 'https://www.w3schools.com/css/css_important.asp'.*/
 }
@@ -86,7 +93,7 @@ ul {
         top: 0;
 
         background-color: var(--colors_07);
-        padding: 12px;                                  /* Padding: [top], [right], [bottom], [left]. Ref.: 'https://www.w3schools.com/css/css_padding.asp' */
+        padding: 12px;
     }
 
     .header-nav {
@@ -107,8 +114,9 @@ ul {
     .header-nav-container_left-hyperlink_logo {
         color: var(--colors_logo);
         text-decoration-line: none;                     /* To eliminate underscore format of hyperlinks. */
-        padding-left: 20px;                             /* Left padding ONLY ('https://www.w3schools.com/css/css_padding.asp'): 20px = 32px (right separation of logo from links block) - 12px (header padding). TODO: automate. */
         font-size: 1.2em;
+        /*background-color: #501555;*/                    /* FOR TESTING SPACING. */
+        margin-left: 20px;                              /* Left margin ONLY ('https://www.w3schools.com/css/css_padding.asp'): 20px = 32px (right separation of logo from links block) - 12px (header padding). TODO: automate. */
     }
 
     /* NOTE: html element might be commented out, if logo is pure text. */
@@ -118,7 +126,7 @@ ul {
 
     .header-nav-container_left-container_links {
         display: flex;
-        gap: 16px;                                      /* Separate each page. */
+        gap: 16px;                                      /* Separates each page. */
         align-items: flex-start;                        /* Send links text to TOP: 'https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-align-items'. */
     }
 
@@ -137,120 +145,114 @@ ul {
     }
 
     .header-nav-container_links-link {
-        text-decoration-line: none;                     /* To eliminate underscore format of hyperlinks. */
+        text-decoration-line: none;
     }
-
-    /* .header-nav-link_home {
-        color: var(--colors_logo);
-        font-family: var(--fonts_minor);
-        font-size: 1rem; */
-        /*text-decoration: none;*/                          /* To eliminate underscore format for hyperlinks. */
-    /* } */
-
-    /* .header-nav-link {
-        color: var(--colors_03);
-        font-family: var(--fonts_minor);
-        font-size: 1rem;
-        text-decoration: none;
-    } */
 
     /* MAIN: content. */
 
-    /* .main {
-        padding: 2% 3% 2% 3%;
-    } */
+    .main {
+        /*background-color: #501555;*/                    /* FOR TESTING SPACING. */
+        margin: 12px;                                   /* Same SPACING (margin or padding, depending on each case) as '.header'. */
+    }
 
-    /* .main-upper {
+    .main-top {
         display: flex;
-        gap: 20px;
-    } */
+        gap: 16px;                                      /* Separates sections: 'Parameters' and 'Contacts'. Same SPACING as page links in header. */
+        /*background-color: #501555;*/                    /* FOR TESTING SPACING. */
+        margin-bottom: 16px;                            /* Separates top section from bottom; i.e. 'Parameters' and 'Contacts', from 'Console'. Same SPACING as page links in header. */
+    }
 
-    /* .main-upper-parameters {
-        display: flex;
-        flex-direction: column;
-    } */
+    /* MAIN: content (parameters). */
 
-    /* .main-upper-parameters-title {
-        font-family: var(--fonts_minor);
-        font-size: 1.2rem;
-        padding: 0px 0px 10px 0px;
-    } */
-
-    /* .main-upper-parameters-content {
-        display: flex;
-    } */
-
-    /* .main-upper-parameters-content-input_labels {
+    .main-top-parameters {
         display: flex;
         flex-direction: column;
-        font-family: var(--fonts_main);
-        gap: 5px;
-        padding: 0px 20px 0px 0px;
-    } */
+        gap: 16px;                                      /* Separates sections: parameters title, content and 'div' for button. Same SPACING as page links in header. */
+    }
 
-    /* .main-upper-parameters-content-input_boxes {
+    .main-top-parameters-content {
         display: flex;
-        flex-direction: column;
-        gap: 5px;
-        width: 250px;
-    } */
-
-    /* .main-upper-parameters-button_create_contact__container { */
-        /* Center a 'div': 'https://www.aluracursos.com/blog/centrar-un-elemento-con-css'. */
-        /* margin-left: auto;
-        margin-right: auto;
-        padding: 10px 0px 0px 0px;
-    } */
-
-    /* .main-upper-parameters-button_create_contact {
-        font-family: var(--fonts_minor);
-        font-size: 0.9rem;
-        padding: 5px 30px 5px 30px;
-    } */
-
-    /* .main-upper-contacts { */
-        /*flex-grow: 1;*/                                   /* Expand last flex child size: 'https://stackoverflow.com/questions/37745051/fill-the-remaining-height-or-width-in-a-flex-container/37751019#37751019'. */
-        /* display: flex;
-        flex-direction: column;
-    } */
-
-    /* .main-upper-contacts-title {
-        font-family: var(--fonts_minor);
-        font-size: 1.2rem;
-        padding: 0px 0px 10px 0px;
-    } */
-
-    /* .main-upper-contacts-show {
-        background-color: var(--colors_06);
-        color: var(--colors_02);
-        font-family: var(--fonts_main);
-        font-size: 0.8rem;
-        padding: 10px;
-    } */
-
-    /* .main-lower {
-    } */
-
-    /* .main-lower-log {
-    } */
+    }
     
-    /* .main-lower-log-show__container {
-        padding: 10px 0px 0px 0px;
+    .main-top-parameters-content-input_labels {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        /*background-color: #501555;*/                    /* FOR TESTING SPACING. */
+        padding-right: 40px;
+    }
+
+    /* .main-top-parameters-content-input_labels-label {
     } */
 
-    /* .main-lower-log-show {
-        background-color: var(--colors_06);
-        color: var(--colors_02);
+    .main-top-parameters-content-input_boxes {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 256px;
+    }
+
+    .main-top-parameters-content-input_boxes-box {
         font-family: var(--fonts_main);
-        font-size: 0.8rem;
-        padding: 10px;
-    } */
+        font-size: 1rem;
+    }
+    
+    .main-top-parameters-container_button {
+        /*
+        Center a 'div': 'https://www.aluracursos.com/blog/centrar-un-elemento-con-css'.
+        - NOTE: since PARENT container is using Flexbox, there is no need to set a 'fixed' size, as stated in article.
+        */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .main-top-parameters-container_button-button_create {
+        font-family: var(--fonts_minor);
+        font-size: 1rem;
+        /*background-color: #501555;*/                    /* FOR TESTING SPACING. */
+        padding: 6px 32px 6px 32px;                     /* SPACING (margin or padding, depending on each case) adjusted for button display. Padding: [top], [right], [bottom], [left]. Ref.: 'https://www.w3schools.com/css/css_padding.asp'. */
+    }
+
+    /* MAIN: content (contacts). */
+
+    .main-top-contacts {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;                                      /* Separates sections: contacts title and 'div' for contacts listing. Same SPACING as page links in header. */
+        flex-grow: 1;                                   /* Flexbox item to grow; elements of contacts section, expand to 'right': 'https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-flex-grow'. */
+    }
+
+    .main-top-contacts-output {
+        color: var(--colors_02);
+        font-size: 0.8em;                               /* TODO: em vs rem. */
+        background-color: var(--colors_06);
+        padding: 8px;                                   /* TODO: transform px to relative units to font-size. */
+        flex-grow: 1;                                   /* Flexbox item to grow; contacts listing, expand to 'bottom': 'https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-flex-grow'. */
+    }
+
+    /* MAIN: content (console). */
+
+    .main-bottom {
+        /*background-color: #501555;*/                    /* FOR TESTING SPACING. */
+        margin-bottom: 4px;                             /* Separates bottom section from everything AFTER; footer in this case. Since it's LAST SECTION, to match same SPACING as page links in header (i.e. 16px), consider margin ALREADY added by 'main' (i.e. 12px). Therefore, missing space to fill = 16px - 12px = 4px. */
+    }
+    
+    .main-bottom-console {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;                                      /* Separates sections: console title and 'div' for console log. Same SPACING as page links in header. */
+    }
+
+    #pyscript_output_console_log {
+        background-color: var(--colors_06);
+        padding: 8px;                                   /* TODO: transform px to relative units to font-size. */
+    }
 
     /* FOOTER: credits. */
 
     .footer {
         background-color: var(--colors_04);
-        padding: 12px;                                  /* Same padding as '.header'. */
+        padding: 12px;                                  /* Same SPACING (margin or padding, depending on each case) as '.header'. */
         text-align: center;
     }
 
