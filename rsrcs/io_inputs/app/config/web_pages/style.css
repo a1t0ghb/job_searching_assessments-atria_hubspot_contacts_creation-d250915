@@ -160,6 +160,7 @@ ul {
         gap: 16px;                                      /* Separates sections: 'Parameters' and 'Contacts'. Same SPACING as page links in header. */
         /*background-color: #501555;*/                    /* FOR TESTING SPACING. */
         margin-bottom: 16px;                            /* Separates top section from bottom; i.e. 'Parameters' and 'Contacts', from 'Console'. Same SPACING as page links in header. */
+        flex-wrap: wrap;                                /* When shrinking, wrap onto multiple lines; e.g. column stack, instead of staying on 1 line: 'https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-flex-wrap'. */
     }
 
     /* MAIN: content (parameters). */
