@@ -27,13 +27,14 @@ VARIABLES DECLARATION.
     --font_size_default: 16px;                          /* Default web-browsers font-size: 'https://stackoverflow.com/questions/29511983/is-the-default-font-size-of-every-browser-16px-why/29512572#29512572'. */
     --colors_logo: #FF4800;
     --colors_background: #0D1117;
-    --colors_01: #F6F6F6;
+    --colors_01: rgb(246, 246, 246);
     --colors_02: #B2B2B2;
     --colors_03: #D5168A;
     --colors_04: #501555;
     --colors_05: #1F143F;
     --colors_06: #1F2428;
     --colors_07: #000000;
+    --colors_fonts_muted: #94A3B8;
     --fonts_fallback: system-ui, sans-serif;            /* Hierarchical list of fonts; from preferred, to fallback: 'https://www.w3schools.com/cssref/pr_font_font-family.php', 'https://developer.mozilla.org/en-US/docs/Web/CSS/font-family', 'https://www.w3schools.com/css/css_font_websafe.asp'. */
     --fonts_main: "Montserrat", var(--fonts_fallback);
     --fonts_minor: "Krona One", var(--fonts_fallback);
@@ -80,6 +81,10 @@ ul {
     padding: 10px 0px 0px 20px !important;              /* IMPORTANT: lists REQUIRE PADDING; therefore, need manual adjustment, if padding set GLOBALLY to 0; i.e. '* { padding: 0; }'. Ref.: 'https://stackoverflow.com/questions/72279264/unordered-list-not-showing-bullets/72281511#72281511', 'https://www.w3schools.com/css/css_important.asp'.*/
 }
 
+a {
+    text-decoration-line: none;                         /* To eliminate underscore format of hyperlinks. */
+}
+
 /* Use of 'media queries' to define layouts according to specific screen resolutions: 'https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries#targeting_media_features'. */
 @media (width > 0px) {                                  /* Base design, as starting point: e.g. for desktop, although recommended to start with mobile, 1st: 'https://stackoverflow.com/questions/6370690/media-queries-how-to-target-desktop-tablet-and-mobile/20350990#20350990'. */
     
@@ -113,7 +118,6 @@ ul {
 
     .header-nav-container_left-hyperlink_logo {
         color: var(--colors_logo);
-        text-decoration-line: none;                     /* To eliminate underscore format of hyperlinks. */
         font-size: 1.2em;
         /*background-color: #501555;*/                    /* FOR TESTING SPACING. */
         margin-left: 20px;                              /* Left margin ONLY ('https://www.w3schools.com/css/css_padding.asp'): 20px = 32px (right separation of logo from links block) - 12px (header padding). TODO: automate. */
@@ -132,7 +136,6 @@ ul {
 
     .header-nav-container_left-container_links-link {
         color: var(--colors_03);
-        text-decoration-line: none;                     /* To eliminate underscore format of hyperlinks. */
         font-size: 1.2em;
     }
 
@@ -145,7 +148,7 @@ ul {
     }
 
     .header-nav-container_links-link {
-        text-decoration-line: none;
+        color: var(--colors_fonts_muted);
     }
 
     /* MAIN: content. */
@@ -201,6 +204,7 @@ ul {
         /*background-color: #501555;*/                    /* FOR TESTING SPACING. */
         min-width: 209px;                               /* Min. width for LONGEST text (i.e. 'New Contact's Last Name:') to be in 1 LINE. DO NOT CONSIDER SPACING (margin or padding). */
         margin-right: 40px;                             /* Appropiate right-SPACING (margin or padding), to separate LONGEST label, from input box. */
+        color: var(--colors_fonts_muted);
     }
 
     .main-top-parameters-content-row-column_inputs {
@@ -274,7 +278,36 @@ ul {
     .footer {
         background-color: var(--colors_04);
         padding: 12px;                                  /* Same SPACING (margin or padding, depending on each case) as '.header'. */
-        text-align: center;
+        display: flex;
+        gap: 16px;                                      /* Separates sections: copyright and credits. Same SPACING as page links in header. */
+        justify-content: space-between;                 /* Distribute sections of copyrigth and credits, both to the opposites: 'https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-justify-content'. */
+        align-items: center;
+        flex-wrap: wrap;                                /* When shrinking, wrap onto multiple lines; e.g. column stack, instead of staying on 1 line: 'https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-flex-wrap'. */
+    }
+
+    .footer-container_credits {
+        display: flex;
+        gap: 16px;                                      /* Separates credits items: developed by, github and email. Same SPACING as page links in header. */
+        align-items: center;
+        flex-wrap: wrap;                                /* When shrinking, wrap onto multiple lines; e.g. column stack, instead of staying on 1 line: 'https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-flex-wrap'. */
+    }
+
+    .footer-container_credits-container_credits {
+        display: flex;
+        align-items: center;
+        gap: 8px;                                      /* Separates logo from text. */
+    }
+
+    footer div div svg {
+        background-color: rgba(246, 246, 246, 0.2);  /* Same color as '--colors_01', but with transparency. */
+        border-radius: 100%;
+        width: 32px;
+        height: 32px;
+        padding: 4px;                                  /* Inner padding; the greater the padding, the smaller the icon. */
+    }
+
+    footer div div a {
+        color: var(--colors_01);
     }
 
 }
