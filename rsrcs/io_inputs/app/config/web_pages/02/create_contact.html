@@ -77,7 +77,8 @@
         <main class="main">
             <!-- 'div' to organize layout, without semantic meaning: 'https://stackoverflow.com/questions/6939864/what-is-the-difference-between-section-and-div/6941170#6941170'. -->             
             <div class="main-top">
-                <section class="main-top-parameters">
+                <!-- Form to submit data. Method 'POST' to avoid displaying form values in address bar: 'https://www.w3schools.com/html/html_forms_attributes.asp'. -->
+                <form class="main-top-parameters" id="form_parameters">
                     <h3>Parameters</h3>
                     <div class="main-top-parameters-content">
                         <div class="main-top-parameters-content-row">
@@ -86,7 +87,7 @@
                                 <label for="input_api_token">HubsPot API Token:</label>
                             </div>
                             <div class="main-top-parameters-content-row-column main-top-parameters-content-row-column_inputs">
-                                <input type="password" id="input_api_token" name="api_token" placeholder="HubSpot API Token here..." required />
+                                <input type="password" id="input_api_token" name="api_token" placeholder="HubSpot API Token here..." autofocus required />
                             </div>
                         </div>
                         <div class="main-top-parameters-content-row">
@@ -114,11 +115,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="main-top-parameters-container_button">
-                        <!-- Buttons (type 'button', 'submit' and 'reset') vs Input type 'button': 'https://www.codeguage.com/v1/courses/html/forms-buttons', 'https://www.w3schools.com/tags/att_button_type.asp'. -->
-                        <button type="button" id="button_create_contact" class="main-top-parameters-container_button-button_create">Create Contact</button>
+                    <div class="main-top-parameters-container_buttons">
+                        <!--
+                        - Buttons (type 'button', 'submit' and 'reset') vs Input type 'button': 'https://www.codeguage.com/v1/courses/html/forms-buttons', 'https://www.w3schools.com/tags/att_button_type.asp'.
+                        - Assign button to form: 'https://www.w3schools.com/tags/att_button_form.asp'.
+                        -->
+                        <button type="button" id="button_validate_api_token" class="main-top-parameters-container_buttons-button">Validate API Token</button>
+                        <button type="submit" form="form_parameters" id="button_create_contact" class="main-top-parameters-container_buttons-button" disabled>Create Contact</button>
                     </div>
-                </section>
+                </form>
                 <section class="main-top-contacts">
                     <h3>Contacts</h3>
                     <!-- 'div' for listing contacts. 'div' instead of 'p', since it has no semantic meaning; it's for graphic layouts. -->

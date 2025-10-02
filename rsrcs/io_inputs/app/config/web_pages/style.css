@@ -220,22 +220,31 @@ a {
         margin-bottom: 0px;                             /* Adjusts last 'cell' SPACING (from 'margin-bottom: 8px;', of '.main-top-parameters-content-row-column'), since upper-parent '.main-top-parameters', already has it; e.g. 'gap: 16px'. */
     }
     
-    .main-top-parameters-container_button {
+    .main-top-parameters-container_buttons {
         /*
         Center a 'div': 'https://www.aluracursos.com/blog/centrar-un-elemento-con-css'.
         - NOTE: since PARENT container is using Flexbox, there is no need to set a 'fixed' size, as stated in article.
         */
-        margin-left: auto;
-        margin-right: auto;
+        /* margin-left: auto; */
+        /* margin-right: auto; */
+        display: flex;
+        justify-content: center;
+        gap: 16px;
     }
 
-    .main-top-parameters-container_button-button_create {
+    .main-top-parameters-container_buttons-button {
         font-family: var(--fonts_minor);
         font-size: 1rem;
         /*background-color: #501555;*/                    /* FOR TESTING SPACING. */
         padding: 6px 32px 6px 32px;                     /* SPACING (margin or padding, depending on each case) adjusted for button display. Padding: [top], [right], [bottom], [left]. Ref.: 'https://www.w3schools.com/css/css_padding.asp'. */
         background-color: var(--colors_04);
         color: var(--colors_01);
+        flex-grow: 1;                                   /* Expand flex-items as necessary. NOTE: only 2 buttons have same class, therefore same 'flex-grow: 1': 'https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-flex-grow'. */
+    }
+
+    .main-top-parameters-container_buttons-button:disabled, .main-top-parameters-container_buttons-button[disabled]{
+        background-color: var(--colors_06);
+        color: var(--colors_background);
     }
 
     /* MAIN: content (contacts). */
@@ -311,3 +320,4 @@ a {
     }
 
 }
+/* EOF. */

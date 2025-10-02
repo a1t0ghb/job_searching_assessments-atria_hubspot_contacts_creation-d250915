@@ -20,7 +20,7 @@ def UDFPrintLog(IMessage: str) -> None:
 
     return None
 
-@when("click", "#button_create_contact")
+@when("click", "#button_validate_api_token")
 def UDFTest(event) -> None:
     UDFPrintLog("[LOG] Testing...")
     return None
