@@ -1,0 +1,6 @@
+{
+    "packages": ["pyyaml", "tzdata", "requests"],
+    "files": {
+        "./hubspot_contacts_creation-config_vars.yaml": ""
+    }
+}

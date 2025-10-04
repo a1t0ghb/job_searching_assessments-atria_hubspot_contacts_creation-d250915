@@ -35,8 +35,6 @@
         - 'module' vs. 'non-module' scripts: 'https://neerajdana.medium.com/understanding-type-module-in-javascript-a-comprehensive-guide-ebb13926da7a'.
         -->
         <script type="module" src="./../loading_splashscreen_(app).js"></script>
-        <!-- Fallback call to PyScript script to trigger 'py:ready' event, in case there are no PyScript scripts in the page. -->
-        <script type="py" defer></script>
         <!--
         Good practice for loading scripts: place them in 'head' and use attribute 'defer' or 'async', according to needs. References:
         - Where to put script tag: 'https://forum.freecodecamp.org/t/where-is-it-advisable-to-put-the-script-tag/439118'.
@@ -46,7 +44,9 @@
         - 'async' vs. 'defer' vs. 'module': 'https://dev.to/zacharylee/html-script-element-attributes-async-vs-defer-vs-typemodule-5h6j'.
         -->
         <!-- Python script call: 'type="py"' attribute tells BROWSER to use PyScript. -->
-        <script type="py" src="./../../imports/hubspot_contacts_creation_launcher.py" config="./../../imports/hubspot_contacts_creation_launcher_(pyscript).json" defer></script>
+        <script type="py" src="./../../imports/hubspot_contacts_creation-launcher.py" config="./../../imports/hubspot_contacts_creation-launcher_config.json" defer></script>
+        <!-- Fallback call to PyScript script to trigger 'py:ready' event, in case there are no PyScript scripts in the page. -->
+        <script type="py" defer></script>
     </head>
     <body>
         <!-- Main dialog (as 'modal', defined in js module 'loading_splashscreen_(app).js'), what appears 1st as soon as web page is loaded. -->
@@ -92,26 +92,26 @@
                         </div>
                         <div class="main-top-parameters-content-row">
                             <div class="main-top-parameters-content-row-column main-top-parameters-content-row-column_labels">
-                                <label for="input_user_name">New Contact's Name:</label>
+                                <label for="input_contact_first_name">New Contact's First Name:</label>
                             </div>
                             <div class="main-top-parameters-content-row-column main-top-parameters-content-row-column_inputs">
-                                <input type="text" id="input_user_name" name="user_name" placeholder="New contact's name here..." required />
+                                <input type="text" id="input_contact_first_name" name="contact_first_name" placeholder="New contact's first name here..." required disabled />
                             </div>
                         </div>
                         <div class="main-top-parameters-content-row">
                             <div class="main-top-parameters-content-row-column main-top-parameters-content-row-column_labels">
-                                <label for="input_user_last_name">New Contact's Last Name:</label>
+                                <label for="input_contact_last_name">New Contact's Last Name:</label>
                             </div>
                             <div class="main-top-parameters-content-row-column main-top-parameters-content-row-column_inputs">
-                                <input type="text" id="input_user_last_name" name="user_last_name" placeholder="New contact's last name here..." />
+                                <input type="text" id="input_contact_last_name" name="contact_last_name" placeholder="New contact's last name here..." disabled />
                             </div>
                         </div>
                         <div class="main-top-parameters-content-row">
                             <div class="main-top-parameters-content-row-column main-top-parameters-content-row-column_labels main-top-parameters-content-row-column_last">
-                                <label for="input_user_email">New Contact's Email:</label>
+                                <label for="input_contact_email">New Contact's Email:</label>
                             </div>
                             <div class="main-top-parameters-content-row-column main-top-parameters-content-row-column_inputs main-top-parameters-content-row-column_last">
-                                <input type="email" id="input_user_email" name="user_email" placeholder="New contact's email here..." required />
+                                <input type="email" id="input_contact_email" name="user_email" placeholder="New contact's email here..." required disabled />
                             </div>
                         </div>
                     </div>
@@ -121,7 +121,7 @@
                         - Assign button to form: 'https://www.w3schools.com/tags/att_button_form.asp'.
                         -->
                         <button type="button" id="button_validate_api_token" class="main-top-parameters-container_buttons-button">Validate API Token</button>
-                        <button type="submit" form="form_parameters" id="button_create_contact" class="main-top-parameters-container_buttons-button" disabled>Create Contact</button>
+                        <button type="button" form="form_parameters" id="button_create_contact" class="main-top-parameters-container_buttons-button" disabled>Create Contact</button>
                     </div>
                 </form>
                 <section class="main-top-contacts">

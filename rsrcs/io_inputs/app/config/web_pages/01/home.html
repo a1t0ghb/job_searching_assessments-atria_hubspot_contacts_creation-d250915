@@ -34,9 +34,7 @@
         - 'module' scripts: 'https://neerajdana.medium.com/understanding-type-module-in-javascript-a-comprehensive-guide-ebb13926da7a'.
         - 'module' vs. 'non-module' scripts: 'https://neerajdana.medium.com/understanding-type-module-in-javascript-a-comprehensive-guide-ebb13926da7a'.
         -->
-        <!-- <script type="module" src="./../loading_splashscreen_(app).js"></script> -->
-        <!-- Fallback call to PyScript script to trigger 'py:ready' event, in case there are no PyScript scripts in the page. -->
-        <!-- <script type="py" defer></script> -->
+        <script type="module" src="./../loading_splashscreen_(app).js"></script>
         <!--
         Good practice for loading scripts: place them in 'head' and use attribute 'defer' or 'async', according to needs. References:
         - Where to put script tag: 'https://forum.freecodecamp.org/t/where-is-it-advisable-to-put-the-script-tag/439118'.
@@ -46,7 +44,8 @@
         - 'async' vs. 'defer' vs. 'module': 'https://dev.to/zacharylee/html-script-element-attributes-async-vs-defer-vs-typemodule-5h6j'.
         -->
         <!-- Python script call: 'type="py"' attribute tells BROWSER to use PyScript. -->
-        <!-- <script type="py" src="./../../imports/hubspot_contacts_creation_launcher.py" config="./../../imports/hubspot_contacts_creation_launcher_(pyscript).json" defer></script> -->
+        <!-- Fallback call to PyScript script to trigger 'py:ready' event, in case there are no PyScript scripts in the page. -->
+        <script type="py" defer></script>
     </head>
     <body>
         <!-- Main dialog (as 'modal', defined in js module 'loading_splashscreen_(app).js'), what appears 1st as soon as web page is loaded. -->

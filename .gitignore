@@ -6,7 +6,7 @@
 #  - Examples: 'https://www.atlassian.com/git/tutorials/saving-changes/gitignore'.
 
 #  Keys.
-*-input_secrets.yaml
+*_secrets.yaml
 
 #  Specific files: original screen recording, to reduce possibilities of doxing.
 vid-readme_frontpage_gif-01_original_footage.mp4
