@@ -16,6 +16,7 @@ import zoneinfo                         #  [PKG INSTALLATION - PYSCRIPT] DO NOT 
 # import requests                         #  [PKG INSTALLATION - PYSCRIPT] Added to config. file (TOML | JSON).               #  To send HTTP requests. NOTE: not using YET, since when using it with PyScript from a client / web-browser, depending on the API (e.g. HubSpot), it could block requests and throw CORS error: 'https://developers.hubspot.com/docs/cms/reference/serverless-functions/serverless-functions#cors', 'https://www.kelp.agency/blog/how-to-enable-cors-ajax-requests-for-any-hubspot-api/'.
 from pyscript import when               # pyright: ignore[reportMissingImports] #  [PKG INSTALLATION - PYSCRIPT] DO NOT add to config. file (TOML | JSON).          #  [PyScript] Allows usage of 'pyscript.when' decorator for Python functions, to handle events (as a replacement of 'addEventListener' method of Javascript (JS)): 'https://docs.pyscript.net/2024.8.1/api/#pyscriptwhen'.
 from pyscript import document           # pyright: ignore[reportMissingImports] #  [PKG INSTALLATION - PYSCRIPT] DO NOT add to config. file (TOML | JSON).          #  [PyScript] To manage html elements, via DOM: 'https://docs.pyscript.net/2024.8.1/api/#pyscriptdocument'.
+import random                           #  [PKG INSTALLATION - PYSCRIPT] DO NOT add to config. file (TOML | JSON).          #  To generate random contact IDs.
 import pandas as pd                     #  [PKG INSTALLATION - PYSCRIPT] Added to config. file (TOML | JSON).               #  Dataframes, and csv's.
 from pyscript import display            # pyright: ignore[reportMissingImports] #  [PKG INSTALLATION - PYSCRIPT] DO NOT add to config. file (TOML | JSON).          #  [PyScript] Displays content, using in-function intelligence for proper display: 'https://docs.pyscript.net/2024.8.1/api/#pyscriptdisplay'.
 
@@ -401,9 +402,13 @@ def UDFCreateListingContactsDataframeFromHubSpotAPIResults(IDict: dict) -> pd.Da
     
     contacts_dataframe = pd.DataFrame()         #  Declares an empty dataframe.
 
-    #  Example of API results when listing contacts, for reference:
-    # global _api_results_listing_contacts        #  FOR TESTING. to be able to call from INSIDE any function.
-    # _api_results_listing_contacts = {
+    #  Example of HubSpot API structure response , for listing contacts, for reference.
+    #
+    # #  For testing, if required variable to be global; i.e. accessible from any other function.
+    # api_results_listing_contacts                  = {}
+    # globals()['api_results_listing_contacts']     = api_results_listing_contacts
+    #
+    # api_results_listing_contacts                  = {
     #     'results': [
     #         {
     #             'id': '155463762531',
@@ -541,41 +546,6 @@ def UDFValidateAPIToken() -> None:
         #     IApiToken = api_token,
         # )
 
-        #  [TESTING] HubSpot API results.
-        _api_results_listing_contacts = {
-            'results': [
-                {
-                    'id': '155463762531',
-                    'properties': {
-                        'createdate': '2025-09-15T14:46:41.159Z',
-                        'email': 'emailmaria@hubspot.com',
-                        'firstname': 'Maria',
-                        'hs_object_id': '155463762531',
-                        'lastmodifieddate': '2025-09-15T22:08:01.565Z',
-                        'lastname': 'Johnson (Sample Contact)'
-                    },
-                    'createdAt': '2025-09-15T14:46:41.159Z',
-                    'updatedAt': '2025-09-15T22:08:01.565Z',
-                    'archived': False
-                },
-                {
-                    'id': '155466326560',
-                    'properties': {
-                        'createdate': '2025-09-15T14:46:42.108Z',
-                        'email': 'bh@hubspot.com',
-                        'firstname': 'Brian',
-                        'hs_object_id': '155466326560',
-                        'lastmodifieddate': '2025-09-18T14:47:17.114Z',
-                        'lastname': 'Halligan (Sample Contact)'
-                    },
-                    'createdAt': '2025-09-15T14:46:42.108Z',
-                    'updatedAt': '2025-09-18T14:47:17.114Z',
-                    'archived': False
-                }
-            ]
-        }
-        api_results_listing_contacts                = _api_results_listing_contacts
-
         # #  [DEBUG] List contacts result from API.
         # UDFJsonPrint(api_results_listing_contacts)
 
@@ -668,6 +638,15 @@ def UDFCreateContact(event) -> None:
             #     IApiPayload = new_contact_payload
             # )
 
+            #  [TESTING] Initialize dummy data.
+            if (_TESTING_WITH_DUMMY_DATA):
+                UDFTestingDummyDataAdd(
+                    IDict               = api_results_listing_contacts,
+                    IEmail              = contact_email,
+                    IFirstName          = contact_first_name,
+                    ILastName           = contact_last_name
+                )
+
             UDFPrintLog(f"[SUCCESS] Please validate execution results with previous LOG messages.")
 
             #  If succesful execution (at least before the HubSpot API call), it cleans input fields.
@@ -684,6 +663,123 @@ def UDFCreateContact(event) -> None:
 
         #  Set focus on contact's first name, regardless of inputs format validation being successful or not.
         contact_first_name_html_element.focus()
+    
+    return None
+
+#  [TESTING] Adds dummy data to recreation of HubSpot API contacts response.
+#  - Ref.: 'https://developers.hubspot.com/docs/api-reference/crm-contacts-v3/basic/get-crm-v3-objects-contacts'.
+#  - Use functions with optional arguments, with default values: 'https://realpython.com/python-optional-arguments/#using-python-optional-arguments-with-default-values'.
+def UDFTestingDummyDataAdd(IDict: dict, ICreateDate: str = '', IEmail:str = '', IFirstName: str = '', IHSObjectID: str = '', ILastModifiedDate: str = '', ILastName: str = '', IArchived: bool = False) -> None:
+
+    #  Example of HubSpot API structure response , for listing contacts, for reference.
+    #
+    # #  For testing, if required variable to be global; i.e. accessible from any other function.
+    # api_results_listing_contacts                  = {}
+    # globals()['api_results_listing_contacts']     = api_results_listing_contacts
+    #
+    # api_results_listing_contacts                  = {
+    #     'results': [
+    #         {
+    #             'id': '155463762531',
+    #             'properties': {
+    #                 'createdate': '2025-09-15T14:46:41.159Z',
+    #                 'email': 'emailmaria@hubspot.com',
+    #                 'firstname': 'Maria',
+    #                 'hs_object_id': '155463762531',
+    #                 'lastmodifieddate': '2025-09-15T22:08:01.565Z',
+    #                 'lastname': 'Johnson (Sample Contact)'
+    #             },
+    #             'createdAt': '2025-09-15T14:46:41.159Z',
+    #             'updatedAt': '2025-09-15T22:08:01.565Z',
+    #             'archived': False
+    #         },
+    #         {
+    #             'id': '155466326560',
+    #             'properties': {
+    #                 'createdate': '2025-09-15T14:46:42.108Z',
+    #                 'email': 'bh@hubspot.com',
+    #                 'firstname': 'Brian',
+    #                 'hs_object_id': '155466326560',
+    #                 'lastmodifieddate': '2025-09-18T14:47:17.114Z',
+    #                 'lastname': 'Halligan (Sample Contact)'
+    #             },
+    #             'createdAt': '2025-09-15T14:46:42.108Z',
+    #             'updatedAt': '2025-09-18T14:47:17.114Z',
+    #             'archived': False
+    #         }
+    #     ]
+    # }
+    
+    #  Validates JSON (dictionary) has an entry called 'results' (which it's a list), and if not, it creates it (empty): 'https://www.geeksforgeeks.org/python/python-check-given-key-already-exists-in-a-dictionary/'.
+    if ('results' not in IDict):
+        IDict['results'] = []
+
+    #  Starts contacts creation at lowest hierarchy level.
+    json_properties                                 = {}
+    if (ICreateDate == ''):
+        ICreateDate                                 = datetime.datetime.now(tz = _TIME_ZONE)
+        ICreateDate                                 = ICreateDate.strftime('%Y-%m-%dT%H:%M:%S.%f%Z')
+    json_properties['createdate']                   = ICreateDate
+    if (IEmail == ''):
+        IEmail                                      = None
+    json_properties['email']                        = IEmail
+    if (IFirstName == ''):
+        IFirstName                                  = None
+    json_properties['firstname']                    = IFirstName
+    if (IHSObjectID == ''):
+        IHSObjectID                                 = random.randint(100000000000, 999999999999)            #  Random integers in a range: 'https://www.geeksforgeeks.org/python/python-random-module/'.
+    json_properties['hs_object_id']                 = IHSObjectID
+    if (ILastModifiedDate == ''):
+        ILastModifiedDate                           = ICreateDate
+    json_properties['lastmodifieddate']             = ILastModifiedDate
+    if (ILastName == ''):
+        ILastName                                   = None
+    json_properties['lastname']                     = ILastName
+
+    #  Creates next level-up data hierarchy level container.
+    json                                            = {}
+    json['id']                                      = IHSObjectID
+    json['properties']                              = json_properties           #  Assigns previous lower hierarchy data level.
+    json['createdAt']                               = ICreateDate
+    json['updatedAt']                               = ILastModifiedDate
+    # if (IArchived == False):
+    json['archived']                                = IArchived
+
+    #  Adds previous lower hierarchy data level (as a new list entry), following HubSpot API data structure.
+    IDict['results'].append(json)
+
+    return None
+
+#  [TESTING] Initializes dummy data.
+def UDFTestingDummyDataInit() -> None:
+
+    api_results_listing_contacts                    = {}
+    globals()['api_results_listing_contacts']       = api_results_listing_contacts
+
+    UDFTestingDummyDataAdd(
+        IDict               = api_results_listing_contacts,
+        ICreateDate         = '2025-09-15T14:46:41.159Z',
+        IEmail              = 'emailmaria@hubspot.com',
+        IFirstName          = 'Maria',
+        IHSObjectID         = '155463762531',
+        ILastModifiedDate   = '2025-09-15T22:08:01.565Z',
+        ILastName           = 'Johnson (Sample Contact)',
+        IArchived           = False
+    )
+
+    UDFTestingDummyDataAdd(
+        IDict               = api_results_listing_contacts,
+        ICreateDate         = '2025-09-15T14:46:42.108Z',
+        IEmail              = 'bh@hubspot.com',
+        IFirstName          = 'Brian',
+        IHSObjectID         = '155466326560',
+        ILastModifiedDate   = '2025-09-18T14:47:17.114Z',
+        ILastName           = 'Halligan (Sample Contact)',
+        IArchived           = False
+    )
+
+    # #  [DEBUG] List contacts result from API.
+    # UDFJsonPrint(api_results_listing_contacts)
     
     return None
 
@@ -760,7 +856,11 @@ def main():
     # #  [DEBUG] Print global variables.
     # print(globals())
 
-    UDFPrintLog(f"[LOG] Finished initializing.")  
+    #  [TESTING] Initialize dummy data.
+    if (_TESTING_WITH_DUMMY_DATA):
+        UDFTestingDummyDataInit()
+
+    UDFPrintLog(f"[LOG] Finished initializing.")
 
 #  CODE EXECUTION.
 

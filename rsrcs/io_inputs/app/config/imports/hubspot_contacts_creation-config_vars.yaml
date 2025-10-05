@@ -60,4 +60,10 @@ parameters:
         subtype:
         comment: "Indicates CURRENT status of API token; if already validated, or not."
         value: 'False'
+    -
+        name: _TESTING_WITH_DUMMY_DATA
+        type: 'boolean'
+        subtype:
+        comment: "Indicates if it's needed to work with SIMULATED responses from HubSpot API; for example, if there are API connectivity issues like CORS."
+        value: 'True'
 # EOF.
