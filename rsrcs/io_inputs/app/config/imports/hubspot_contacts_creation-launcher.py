@@ -3,7 +3,7 @@
 
 #  LIBRARIES / PACKAGES IMPORTS.
 
-from js import console                  #  [PKG INSTALLATION - PYSCRIPT] DO NOT add to config. file (TOML | JSON).          #  Allows usage of 'console.log()' function from JavaScript (JS).
+from js import console                  # pyright: ignore[reportMissingImports] #  [PKG INSTALLATION - PYSCRIPT] DO NOT add to config. file (TOML | JSON).          #  Allows usage of 'console.log()' function from JavaScript (JS).
 import os                               #  [PKG INSTALLATION - PYSCRIPT] DO NOT add to config. file (TOML | JSON).          #  To work with directories.
 import warnings                         #  [PKG INSTALLATION - PYSCRIPT] DO NOT add to config. file (TOML | JSON).          #  For showing warnings to developer.
 import glob                             #  [PKG INSTALLATION - PYSCRIPT] DO NOT add to config. file (TOML | JSON).          #  For listing files, using UNIX REGEX.
@@ -14,9 +14,10 @@ import datetime                         #  [PKG INSTALLATION - PYSCRIPT] DO NOT 
 import tzdata                           #  [PKG INSTALLATION - PYSCRIPT] Added to config. file (TOML | JSON).               #  NOTE: PRE-REQUISITE for 'zoneinfo'.
 import zoneinfo                         #  [PKG INSTALLATION - PYSCRIPT] DO NOT add to config. file (TOML | JSON).          #  For timezones.
 # import requests                         #  [PKG INSTALLATION - PYSCRIPT] Added to config. file (TOML | JSON).               #  To send HTTP requests. NOTE: not using YET, since when using it with PyScript from a client / web-browser, depending on the API (e.g. HubSpot), it could block requests and throw CORS error: 'https://developers.hubspot.com/docs/cms/reference/serverless-functions/serverless-functions#cors', 'https://www.kelp.agency/blog/how-to-enable-cors-ajax-requests-for-any-hubspot-api/'.
-from pyscript import when               #  [PKG INSTALLATION - PYSCRIPT] DO NOT add to config. file (TOML | JSON).          #  [PyScript] Allows usage of 'pyscript.when' decorator for Python functions, to handle events: 'https://docs.pyscript.net/2024.8.1/api/#pyscriptwhen'.
-from pyscript import document           #  [PKG INSTALLATION - PYSCRIPT] DO NOT add to config. file (TOML | JSON).          #  [PyScript] To manage html elements, via DOM: 'https://docs.pyscript.net/2024.8.1/api/#pyscriptdocument'.
-# from pyscript import display            #  [PKG INSTALLATION - PYSCRIPT] DO NOT add to config. file (TOML | JSON).          #  [PyScript] Displays content, using in-function intelligence for proper display: 'https://docs.pyscript.net/2024.8.1/api/#pyscriptdisplay'.
+from pyscript import when               # pyright: ignore[reportMissingImports] #  [PKG INSTALLATION - PYSCRIPT] DO NOT add to config. file (TOML | JSON).          #  [PyScript] Allows usage of 'pyscript.when' decorator for Python functions, to handle events (as a replacement of 'addEventListener' method of Javascript (JS)): 'https://docs.pyscript.net/2024.8.1/api/#pyscriptwhen'.
+from pyscript import document           # pyright: ignore[reportMissingImports] #  [PKG INSTALLATION - PYSCRIPT] DO NOT add to config. file (TOML | JSON).          #  [PyScript] To manage html elements, via DOM: 'https://docs.pyscript.net/2024.8.1/api/#pyscriptdocument'.
+import pandas as pd                     #  [PKG INSTALLATION - PYSCRIPT] Added to config. file (TOML | JSON).               #  Dataframes, and csv's.
+from pyscript import display            # pyright: ignore[reportMissingImports] #  [PKG INSTALLATION - PYSCRIPT] DO NOT add to config. file (TOML | JSON).          #  [PyScript] Displays content, using in-function intelligence for proper display: 'https://docs.pyscript.net/2024.8.1/api/#pyscriptdisplay'.
 
 #  USER DEFINEND FUNCTIONS (UDFs).
 
@@ -43,6 +44,7 @@ def UDFPrintLog(IMessage: str) -> None:
 # #  NOTE: not used in working with PyScript in a browser, since config. file (TOML | JSON) is used to create specific folders and files in the'in-browser' filesystem.
 # #  Validate if a DIRECTORY path exists, and creates it (optionally, True by default) if it doesn't exist.
 # def UDFValidateDirectoryExists(IPath: str, ICreateDir: bool = True) -> None:
+#
 #     if (not os.path.exists(IPath)):
 #         warnings.warn(f"[WARNING] Directory '{IPath}' should exist in order for current script to run properly.")
 #         if (ICreateDir):
@@ -55,6 +57,7 @@ def UDFPrintLog(IMessage: str) -> None:
 
 #  Search for basename paths (i.e. files OR directories), starting from a given directory (CURRENT working directory, if not provided) in a RECURSIVELY manner.
 def UDFSearchPaths(IBasename: str, IDirpath: str = '**') -> list:
+
     filepaths_list = []
     basename_regex = IBasename.encode('unicode-escape').decode('unicode-escape') + r'$'     #  Python raw strings and RegEx: 'https://www.digitalocean.com/community/tutorials/python-raw-string'.
     search_space_pattern = IDirpath if (IDirpath == '**') else (IDirpath + '/**')
@@ -66,6 +69,7 @@ def UDFSearchPaths(IBasename: str, IDirpath: str = '**') -> list:
 
 #  [AUXILIARY] Prettify JSONs; i.e. converts Python object (generally lists and dictionaries with appropiate structure) to JSON string (a.k.a. 'dumps'). Ref. 'https://www.dataquest.io/blog/api-in-python/'.
 def UDFJsonPrint(IObject) -> None:
+
     text = json.dumps(IObject, sort_keys = False, indent = 4)
     print(text)
     
@@ -203,6 +207,7 @@ def UDFConvertToBasicDataTypes(IValue, IDataType: str, IDataSubType = None):
 #+ 'comment': <variable_comment>, 'value': <variable_value> }, { ... } ].
 #  - Output format: { <variable1_name> : <variable1_value>, <variable2_name> : <variable2_value>, ...}.
 def UDFCreateVariablesDictionaryFromFormattedList(IList: list) -> dict:
+
     variables_dictionary  = {}
     
     for index, variable in enumerate(IList):                                                        #  Get index of a list iterator: 'https://www.stellargrove.com/how-to-blog/find-the-index-of-the-iterator-of-a-list'.
@@ -224,6 +229,7 @@ def UDFCreateVariablesDictionaryFromFormattedList(IList: list) -> dict:
 
 #  Load variables from formatted dictionary into globals().
 def UDFLoadVariablesToGlobals(IDictionary: dict) -> None:
+
     for variable_name, variable_value in IDictionary.items():
         globals()[variable_name] = variable_value
     print(f"[LOG] Variables loaded to 'globals()' (x{len(IDictionary)}): '{"' | '".join([*IDictionary.keys()])}'.")
@@ -335,10 +341,11 @@ def UDFValidateFormatContactEmail(IHTMLObject) -> bool:
 # #+ ALTERNATIVE: use simple PHP server for request: 'https://www.kelp.agency/blog/how-to-enable-cors-ajax-requests-for-any-hubspot-api/'.
 # #  Function to make calls to HubStop API, for either: a. get contacts, b. create a batch of contacts.
 # #  - Function depends on API URL node passed as parameter; i.e. 'IApiUrlNode'.
-# #    - e.g. IApiUrlNode = 'crm/v3/objects/contacts', is for getting HubSpot account contacts.
-# #    - e.g. IApiUrlNode = 'crm/v3/objects/contacts/batch/create', is for creating a batch of contacts; it requires a JSON payload; i.e. 'IApiPayload'.
+# #    - e.g. IApiUrlNode = 'crm/v3/objects/contacts', is for getting HubSpot account contacts: 'https://developers.hubspot.com/docs/api-reference/crm-contacts-v3/basic/get-crm-v3-objects-contacts'.
+# #    - e.g. IApiUrlNode = 'crm/v3/objects/contacts/batch/create', is for creating a batch of contacts; it requires a JSON payload; i.e. 'IApiPayload'. Ref.: 'https://developers.hubspot.com/docs/api-reference/crm-contacts-v3/batch/post-crm-v3-objects-contacts-batch-create'.
 # #  - Function only returns if there are no errors in API connection, and returns a dictionary with JSON response.
 # def UDFHubSpotSendAPIRequest(IApiUrl: str, IApiUrlNode: str, IApiToken: str, IApiPayload: dict = {}) -> dict:
+#
 #     api_results = {}
 #     api_headers = {}
 #
@@ -388,18 +395,140 @@ def UDFValidateFormatContactEmail(IHTMLObject) -> bool:
 #     api_results = api_response.json()
 #     return api_results
 
+#  Creates a dictionary of contacts from HubSpot API.
+#  - Input is a LIST in specific format from HubSpot API for each contact's property: 'https://developers.hubspot.com/docs/api-reference/crm-contacts-v3/basic/get-crm-v3-objects-contacts'.
+def UDFCreateListingContactsDataframeFromHubSpotAPIResults(IDict: dict) -> pd.DataFrame:
+    
+    contacts_dataframe = pd.DataFrame()         #  Declares an empty dataframe.
+
+    #  Example of API results when listing contacts, for reference:
+    # global _api_results_listing_contacts        #  FOR TESTING. to be able to call from INSIDE any function.
+    # _api_results_listing_contacts = {
+    #     'results': [
+    #         {
+    #             'id': '155463762531',
+    #             'properties': {
+    #                 'createdate': '2025-09-15T14:46:41.159Z',
+    #                 'email': 'emailmaria@hubspot.com',
+    #                 'firstname': 'Maria',
+    #                 'hs_object_id': '155463762531',
+    #                 'lastmodifieddate': '2025-09-15T22:08:01.565Z',
+    #                 'lastname': 'Johnson (Sample Contact)'
+    #             },
+    #             'createdAt': '2025-09-15T14:46:41.159Z',
+    #             'updatedAt': '2025-09-15T22:08:01.565Z',
+    #             'archived': False
+    #         },
+    #         {
+    #             'id': '155466326560',
+    #             'properties': {
+    #                 'createdate': '2025-09-15T14:46:42.108Z',
+    #                 'email': 'bh@hubspot.com',
+    #                 'firstname': 'Brian',
+    #                 'hs_object_id': '155466326560',
+    #                 'lastmodifieddate': '2025-09-18T14:47:17.114Z',
+    #                 'lastname': 'Halligan (Sample Contact)'
+    #             },
+    #             'createdAt': '2025-09-15T14:46:42.108Z',
+    #             'updatedAt': '2025-09-18T14:47:17.114Z',
+    #             'archived': False
+    #         }
+    #     ]
+    # }
+
+    contacts_properties = IDict['results']          #  Results for each contact start at a dictionary called 'results'.
+    #  Intermediate dictionary structure for creating pandas dataframe: 'https://www.geeksforgeeks.org/python/how-to-create-dataframe-from-dictionary-in-python-pandas/'.
+    contacts_dictionary = {
+        #  Base contacts properties to pull, that come from default call for listing contacts.
+        'id': [],
+        'archived': [],
+        'email': [],
+        'firstname': [],
+        'lastname': [],
+        'createdate': [],
+        'lastmodifieddate': []
+    }
+
+    for contact_property in contacts_properties:
+        #  Extract each contact's properties from API's JSON, and add each one to the dictionary with a list for each property: 'https://www.digitalocean.com/community/tutorials/python-add-to-list'.
+        contacts_dictionary['id'].append(contact_property['id'])
+        contacts_dictionary['archived'].append(contact_property['archived'])
+        contacts_dictionary['email'].append(contact_property['properties']['email'])
+        contacts_dictionary['firstname'].append(contact_property['properties']['firstname'])
+        contacts_dictionary['lastname'].append(contact_property['properties']['lastname'])
+        contacts_dictionary['createdate'].append(contact_property['properties']['createdate'])
+        contacts_dictionary['lastmodifieddate'].append(contact_property['properties']['lastmodifieddate'])
+
+    contacts_dataframe = pd.DataFrame(contacts_dictionary)
+
+    return contacts_dataframe
+
+#  Enables parameter fields for inputs.
+def UDFEnableParameters() -> None:
+
+    globals()['_IS_HUBSPOT_API_TOKEN_VALIDATED']    = True          #  To set globally; e.g. outside 'main()': 'https://www.w3schools.com/python/python_variables_global.asp'. NOTE: previous method of using keyword 'global' didn't work.
+    contact_first_name_html_element                 = document.querySelector('#input_contact_first_name')
+    contact_first_name_html_element.disabled        = False         #  Disable an input element: 'https://stackoverflow.com/questions/2874688/how-to-disable-an-input-type-text/2874745#2874745'.
+    contact_last_name_html_element                  = document.querySelector('#input_contact_last_name')
+    contact_last_name_html_element.disabled         = False
+    contact_email_html_element                      = document.querySelector('#input_contact_email')
+    contact_email_html_element.disabled             = False
+    create_contact_html_element                     = document.querySelector('#button_create_contact')
+    create_contact_html_element.disabled            = False
+    
+    return None
+
+#  Disables parameter fields for inputs.
+def UDFDisableParameters() -> None:
+
+    globals()['_IS_HUBSPOT_API_TOKEN_VALIDATED']    = False
+    contact_first_name_html_element                 = document.querySelector('#input_contact_first_name')
+    contact_first_name_html_element.disabled        = True
+    contact_last_name_html_element                  = document.querySelector('#input_contact_last_name')
+    contact_last_name_html_element.disabled         = True
+    contact_email_html_element                      = document.querySelector('#input_contact_email')
+    contact_email_html_element.disabled             = True
+    create_contact_html_element                     = document.querySelector('#button_create_contact')
+    create_contact_html_element.disabled            = True
+    
+    #  Cleans any previous entry.
+    UDFSetHTMLValue(contact_first_name_html_element.id, '')
+    UDFSetHTMLValue(contact_last_name_html_element.id, '')
+    UDFSetHTMLValue(contact_email_html_element.id, '')
+    UDFSetHTMLValue('output_contacts', '[CONTACTS LIST]', False)
+    
+    return None
+
+#  If API token changes, must re-validate it.
+#  - NOTE: requires importing 'when' module from package 'pyscript', to add decorators.
+#  - 'pyscript.when': 'https://docs.pyscript.net/2025.8.1/api/#pyscriptwhen'.
+#  - 'change' event: 'https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event'.
+@when("change", "#input_api_token")
+def UDFDisableParametersEvent(event) -> None:
+
+    UDFDisableParameters()
+
+    return None
+
 #  Function to manage workflow when button with id '#button_validate_api_token' is clicked.
 #  - NOTE: requires importing 'when' module from package 'pyscript', to add decorators.
 @when("click", "#button_validate_api_token")
-def UDFValidateAPIToken(event) -> None:
+def UDFValidateAPITokenEvent(event) -> None:
 
-    api_token                               = ''
+    UDFValidateAPIToken()
+
+    return None
+
+#  Validates API token.
+def UDFValidateAPIToken() -> None:
+
+    api_token                                       = ''
 
     #  Get user input from the html; e.g. API token from element with id 'input_api_token'.
-    api_token_html_element                  = document.querySelector('#input_api_token')
-    api_token_format_validation             = UDFValidateFormatAPIToken(api_token_html_element)
+    api_token_html_element                          = document.querySelector('#input_api_token')
+    api_token_format_validation                     = UDFValidateFormatAPIToken(api_token_html_element)
     if api_token_format_validation:
-        api_token                           = UDFGetHTMLValue(api_token_html_element.id)
+        api_token                                   = UDFGetHTMLValue(api_token_html_element.id)
 
     #  Validate if all validations are 'True': 'https://www.w3schools.com/python/ref_func_all.asp'.
     if all([api_token_format_validation]):
@@ -407,47 +536,70 @@ def UDFValidateAPIToken(event) -> None:
         # #  NOTE: not using YET, since when using it with PyScript from a client / web-browser, depending on the API (e.g. HubSpot), it could block requests and throw CORS error: 'https://developers.hubspot.com/docs/cms/reference/serverless-functions/serverless-functions#cors'.
         # #+ ALTERNATIVE: use simple PHP server for request: 'https://www.kelp.agency/blog/how-to-enable-cors-ajax-requests-for-any-hubspot-api/'.
         # api_results_listing_contacts        = UDFHubSpotSendAPIRequest(
-
         #     IApiUrl = _HUBSPOT_API_URL,
         #     IApiUrlNode = _HUBSPOT_API_URL_NODE_CONTACTS,
         #     IApiToken = api_token,
-
         # )
 
+        #  [TESTING] HubSpot API results.
+        _api_results_listing_contacts = {
+            'results': [
+                {
+                    'id': '155463762531',
+                    'properties': {
+                        'createdate': '2025-09-15T14:46:41.159Z',
+                        'email': 'emailmaria@hubspot.com',
+                        'firstname': 'Maria',
+                        'hs_object_id': '155463762531',
+                        'lastmodifieddate': '2025-09-15T22:08:01.565Z',
+                        'lastname': 'Johnson (Sample Contact)'
+                    },
+                    'createdAt': '2025-09-15T14:46:41.159Z',
+                    'updatedAt': '2025-09-15T22:08:01.565Z',
+                    'archived': False
+                },
+                {
+                    'id': '155466326560',
+                    'properties': {
+                        'createdate': '2025-09-15T14:46:42.108Z',
+                        'email': 'bh@hubspot.com',
+                        'firstname': 'Brian',
+                        'hs_object_id': '155466326560',
+                        'lastmodifieddate': '2025-09-18T14:47:17.114Z',
+                        'lastname': 'Halligan (Sample Contact)'
+                    },
+                    'createdAt': '2025-09-15T14:46:42.108Z',
+                    'updatedAt': '2025-09-18T14:47:17.114Z',
+                    'archived': False
+                }
+            ]
+        }
+        api_results_listing_contacts                = _api_results_listing_contacts
+
+        # #  [DEBUG] List contacts result from API.
+        # UDFJsonPrint(api_results_listing_contacts)
+
+        listing_contacts_dataframe                  = UDFCreateListingContactsDataframeFromHubSpotAPIResults(api_results_listing_contacts)
+        # #  [DEBUG] Contacts dataframe.
+        # print(listing_contacts_dataframe)
+
+        #  Display / shows contacts dataframe in target div; i.e. 'output_contacts'.
+        display(listing_contacts_dataframe, target = 'output_contacts', append = False)         #  INJECTS the dataframe in the 'innerHTML' of the target element. With 'append="False"', it REPLACES any previous content there might be, instead of appending it with 'div's if using 'append="True"' (DEFAULT, if ommitted): 'https://docs.pyscript.net/2025.8.1/api/#pyscriptdisplay'.
+        
         UDFPrintLog(f"[SUCCESS] API token is valid. Please validate contacts list was retrieved succesfully.")
 
         #  Enables parameter fields for inputs.
-        globals()['_IS_HUBSPOT_API_TOKEN_VALIDATED']    = True          #  To set globally; e.g. outside 'main()': 'https://www.w3schools.com/python/python_variables_global.asp'. NOTE: previous method of using keyword 'global' didn't work.
-        contact_first_name_html_element                 = document.querySelector('#input_contact_first_name')
-        contact_first_name_html_element.disabled        = False         #  Disable an input element: 'https://stackoverflow.com/questions/2874688/how-to-disable-an-input-type-text/2874745#2874745'.
-        contact_last_name_html_element                  = document.querySelector('#input_contact_last_name')
-        contact_last_name_html_element.disabled         = False
-        contact_email_html_element                      = document.querySelector('#input_contact_email')
-        contact_email_html_element.disabled             = False
-        create_contact_html_element                     = document.querySelector('#button_create_contact')
-        create_contact_html_element.disabled            = False
-                
-        contact_first_name_html_element.focus()                         #  Set focus with JavaScript (JS): 'https://stackoverflow.com/questions/17500704/how-can-i-set-focus-on-an-element-in-an-html-form-using-javascript/17500718#17500718'.
+        UDFEnableParameters()
+        
+        contact_first_name_html_element             = document.querySelector('#input_contact_first_name')
+        contact_first_name_html_element.focus()                                                 #  Set focus with JavaScript (JS): 'https://stackoverflow.com/questions/17500704/how-can-i-set-focus-on-an-element-in-an-html-form-using-javascript/17500718#17500718'.
 
     else:
 
         UDFPrintLog(f"[ERROR] API token is not valid. Please make sure it's valid; i.e. doesn't have trailing spaces, and starts with 'pat-'.")
 
         #  Disables parameter fields for inputs.
-        globals()['_IS_HUBSPOT_API_TOKEN_VALIDATED']    = False
-        contact_first_name_html_element                 = document.querySelector('#input_contact_first_name')
-        contact_first_name_html_element.disabled        = True
-        contact_last_name_html_element                  = document.querySelector('#input_contact_last_name')
-        contact_last_name_html_element.disabled         = True
-        contact_email_html_element                      = document.querySelector('#input_contact_email')
-        contact_email_html_element.disabled             = True
-        create_contact_html_element                     = document.querySelector('#button_create_contact')
-        create_contact_html_element.disabled            = True
-        
-        #  Cleans any previous entry.
-        UDFSetHTMLValue(contact_first_name_html_element.id, '')
-        UDFSetHTMLValue(contact_last_name_html_element.id, '')
-        UDFSetHTMLValue(contact_email_html_element.id, '')
+        UDFDisableParameters()
         
         api_token_html_element.focus()
 
@@ -461,7 +613,7 @@ def UDFCreateContact(event) -> None:
     #  Get user input from the html; e.g. API token from element with id 'input_api_token'.
     api_token_html_element                  = document.querySelector('#input_api_token')
 
-    if (not _IS_HUBSPOT_API_TOKEN_VALIDATED):
+    if (not _IS_HUBSPOT_API_TOKEN_VALIDATED): # pyright: ignore[reportUndefinedVariable]
         UDFPrintLog(f"[ERROR] Please 1st validate your API token is valid.")
         api_token_html_element.focus()
 
@@ -509,7 +661,7 @@ def UDFCreateContact(event) -> None:
             #             "firstname": contact_first_name
             #         }
             #     }
-            # api_results_listing_contacts        = UDFHubSpotSendAPIRequest(
+            # api_results_creating_contact        = UDFHubSpotSendAPIRequest(
             #     IApiUrl = _HUBSPOT_API_URL,
             #     IApiUrlNode = _HUBSPOT_API_URL_NODE_CONTACTS,
             #     IApiToken = api_token,
@@ -522,6 +674,9 @@ def UDFCreateContact(event) -> None:
             UDFSetHTMLValue(contact_first_name_html_element.id, '')
             UDFSetHTMLValue(contact_last_name_html_element.id, '')
             UDFSetHTMLValue(contact_email_html_element.id, '')
+
+            #  Re-initiate process of validating API, to refresh contact list.
+            UDFValidateAPIToken()
 
         else:
 
@@ -600,9 +755,12 @@ def main():
 
     #  Set execution timezone.
     global _TIME_ZONE                           #  To set globally; e.g. outside 'main()': 'https://www.w3schools.com/python/python_variables_global.asp'.
-    _TIME_ZONE                                  = zoneinfo.ZoneInfo(_USER_GEOGRAPHIC_TIMEZONE)
+    _TIME_ZONE                                  = zoneinfo.ZoneInfo(_USER_GEOGRAPHIC_TIMEZONE) # pyright: ignore[reportUndefinedVariable]
 
-    UDFPrintLog(f"[LOG] Finished initializing.")
+    # #  [DEBUG] Print global variables.
+    # print(globals())
+
+    UDFPrintLog(f"[LOG] Finished initializing.")  
 
 #  CODE EXECUTION.
 
