@@ -5,18 +5,18 @@
 - HTML <a> tag not redirecting: 'https://stackoverflow.com/questions/8260546/make-a-html-link-that-does-nothing-literally-nothing/8260561#8260561', 'https://www.geeksforgeeks.org/html/how-to-create-html-link-that-does-not-follow-the-link/'.
 -->
 
-<!-- Badge: WIP -->
+<!-- Badge: WIP
 <p align="left">
   <a href="#" onclick="return false;"><img src="https://img.shields.io/badge/STATUS-WIP-yellow?style=flat"/></a>
-</p>
+</p> -->
 <!--
 🚧 WIP: section under construction. 🚧
 -->
 
-<!-- Badge: Done
+<!-- Badge: Done -->
 <p align="left">
   <a href="#" onclick="return false;"><img src="https://img.shields.io/badge/STATUS-DONE-green?style=flat"/></a>
-</p> -->
+</p>
 
 <!-- README structure followed:
 - 'https://www.aluracursos.com/blog/como-escribir-un-readme-increible-en-tu-github/'.
@@ -28,17 +28,11 @@
 # [💼 Job Searching Assessment] atria: Create Contacts in a HubSpot Account using a Form.
 
 <p align="center">
-    <b>🚧 WIP: section under construction. 🚧</b>
+  🌐 '<a href="https://a1t0ghb.github.io/job_searching_assessments-atria_hubspot_contacts_creation-d250915/">https://a1t0ghb.github.io/job_searching_assessments-atria_hubspot_contacts_creation-d250915/</a>'
 </p>
 
-> [!IMPORTANT]
-> Since 2025.09.29 there has been an on-going development of web-interface. Current documentation refers to PREVIOUS VERSION, **developed as a python script, meant to be run locally!** *Instead of current development approach of creating it as a web page*.
-
-<!--
-<p align="center">
-  🌐 '<a href="[URL for deployment]">[URL for deployment]</a>'
-</p>
--->
+> [!NOTE]
+> **Please be patient** 🙏 Full page load takes *about* [19 seconds](#code-execution) ⌚.
 
 <!--
 Enable autoplay of animated images:
@@ -56,7 +50,12 @@ Image width for GitHub READMEs:
     <img src="./rsrcs/media/img-readme_frontpage_gif.gif" width="1200" />
 </p>
 
-This repo. contains the code developed for a technical assessment for the position of 'Backend Developer', in the month of September, 2025.
+This repo. contains the **web app's version** code developed for a technical assessment for the position of 'Backend Developer', in the month of September, 2025.
+
+> [!IMPORTANT]
+> This project's branch corresponds to a new / different / divergent version from the 'main' branch, that started as a web app's development on 2025.09.29.
+> - As of today, 2025.10.05, **this web app is finished, but DO NOT replace 'main' branch's version** since IT CAN'T CONNECT TO [HUBSPOT API DUE TO CORS ERRORS](https://developers.hubspot.com/docs/cms/reference/serverless-functions/serverless-functions#cors), originated from imposed restrictions by HubSpot API on API calls that come from from a client / web-browser. Potential *'solutions' to be implemented in a future* are proposed [later in this document](#potential-new-features).
+> - This version is 'functional', but **results (in JSON format) from HubSpot API connection (i.e. pulling list of contacts) are SIMULATED** via in-house functions called `UDFTestingDummyDataInit()` and `UDFTestingDummyDataAdd()`, in [`hubspot_contacts_creation-launcher.py`](./rsrcs/io_inputs/app/config/imports/hubspot_contacts_creation-launcher.py).
 
 # 📝 Instructions.
 
@@ -76,32 +75,39 @@ You can use any AI tools, but it's important to understand what you will build. 
 
 ## Code Execution.
 
-You can run the code **straight out-of-the-box**\* (almost\*\*) by cloning this repo. and running the top-level python file [`py3-atria_hubspot_contacts_creation.py`](py3-atria_hubspot_contacts_creation.py).
+Unlike local deployments in your machine, this project runs completely on any web browser, accessing the repo.'s URL: '<https://a1t0ghb.github.io/job_searching_assessments-atria_hubspot_contacts_creation-d250915/>'.
+
+There is no need to do any local installation or deployment; e.g. with Docker and `.devcontainers` if using VS Code.
 
 > [!NOTE]
-> \*Assuming you have experience using VS Code's devcontainers. Otherwise, you will require to do the additional step of installing the appropiate packages / libraries.
+> This web app was developed using [`PyScript`](https://pyscript.net/), which is an open source platform to run Python in the browser. Altough it's a practical alternative to pure JavaScript and other specialized back-end tools such as NodeJS, PHP, or even Python with Flask, DJango or FastAPI, **PyScript suffers in speed performance**. So, when accessing web app, **PLEASE be patient when 1st loading page 🙏**. *Full page load takes about 19 seconds* ⌚.
 
-\*\*The **only pre-configuration required** is your input of your [HubSpot access token](https://developers.hubspot.com/docs/apps/legacy-apps/private-apps/overview#make-api-calls-with-your-app%E2%80%99s-access-token). In order to do so, please follow instructions in the file [`py3-atria_hubspot_contacts_creation-input_secrets-TEMPLATE.yaml`](./io_dir-input/config/py3-atria_hubspot_contacts_creation-input_secrets-TEMPLATE.yaml).
+<p align="center"><b>Page scripts load (~10s) + PyScript libraries and module load (~9s) = Full page load (~19s)</b></p>
 
-### Using devcontainers.
+<div align="center">
+    <table style="border: none;">
+        <tr>
+            <td align="center">
+                <img src="./rsrcs/media/img-readme_page_load-step_01.png" width="600" />
+                <p>Page scripts load (~10s)</p>
+            </td>
+            <td align="center">
+                <img src="./rsrcs/media/img-readme_page_load-step_02.png" width="600" />
+                <p>PyScript libraries and module load (~9s)</p>
+            </td>
+        </tr>
+    </table>
+</div>
 
-1. Execute the top-level python file; e.g. open [`py3-atria_hubspot_contacts_creation.py`](py3-atria_hubspot_contacts_creation.py) > Righ-click > 'Run Python' > 'Run Python File in Terminal'.
+### Pre-requisite from User.
 
-### Running Script on Standalone Environment.
+Please consider that, for now (until HubSpot API connection limitation is addressed), the **only pre-requisite required** from your end is the input of the API token, which *defaults* to '`pat-`'.
 
-1. Install python packages / libraries.
+<div align="center">
+    <img src="./rsrcs/media/img-readme_api_token_default.png" width="300" />
+</div>
 
-    - Within a console / terminal / CLI: e.g. `pip install PyYAML`.
-    - Within a Jupyter Notebook: e.g. `%pip install PyYAML`.
-
-    You can review the list of packages / libraries to install in the section `#  LIBRARIES / PACKAGES IMPORTS.` inside the python file [`py3-atria_hubspot_contacts_creation.py`](py3-atria_hubspot_contacts_creation.py).
-
-    <img src="./rsrcs/media/img-python_file_imports_section.png" width="900" />
-
-    > [!NOTE]
-    > In the python file, the section **before** called '`#  LIBRARIES / PACKAGES MANUAL INSTALLATION, if not using devcontainers in VS Code, but single '.py' file stand-alone running.`', corresponds to a suggestion on commands to follow to properly install packages required. **You can use it as guide**.
-
-2. Execute the top-level python file, [just like when using devcontainers](#using-devcontainers).
+**In a later version**, *whenever the HubSpot API connection limitation is addressed*, the API token will be required to be provided by you, the user. You can read more about it, and where to get one at: '<https://developers.hubspot.com/docs/apps/legacy-apps/private-apps/overview#make-api-calls-with-your-app%E2%80%99s-access-token>'.
 
 ## Code Development.
 
@@ -109,142 +115,178 @@ You can run the code **straight out-of-the-box**\* (almost\*\*) by cloning this 
 
 If you want to dig into the code, you'll have to consider the **base** structure of the project, in order to make any adjustment:
 
-<img src="./rsrcs/media/img-file_structure.png" width="600" />
+<div align="center">
+    <img src="./rsrcs/media/img-readme_file_structure.png" width="300" />
+</div>
 
 <table>
-<tr>
-    <th>File or Folder</th>
-    <th>Path and Name</th>
-    <th>Description</th>
-</tr>
-<tr>
-    <td>File</td>
-    <td>py3-atria_hubspot_contacts_creation.py</td>
-    <td>Main python script file to run code.</td>
-</tr>
-<tr>
-    <td>File</td>
-    <td>py3-atria_hubspot_contacts_creation.ipynb</td>
-    <td>Jupyter Notebook as <b>auxiliary</b> file used as playground for testing. <b>Not meant to be edited or used by a regular user</b>.</td>
-</tr>
-<tr>
-    <td style="color: orange;">Folder</td>
-    <td>.devcontainer</td>
-    <td>Folder to store files for creation of Docker image, <b>if using devcontainers in VS Code</b>.</td>
-</tr>
-<tr>
-    <td style="color: orange;">Folder</td>
-    <td>io_dir_input</td>
-    <td>Folder to store inputs for the project.</td>
-</tr>
-<tr>
-    <td style="color: orange;">Folder</td>
-    <td>io_dir_input/config</td>
-    <td>Store configuration variables.</td>
-</tr>
-</tr>
-    <td>File</td>
-    <td>io_dir_input/config/py3-atria_hubspot_contacts_creation-input_config.yaml</td>
-    <td>Variables to be used by script, listed in a YAML file, with an specific format. <b>Not meant to be edited by a regular user</b>.</td>
-</tr>
-</tr>
-    <td>File</td>
-    <td>io_dir_input/config/py3-atria_hubspot_contacts_creation-input_secrets-TEMPLATE.yaml</td>
-    <td>YAML file, <b>meant to be edited by the user once</b>, that stores the user's HubSpot access token. <u>After editing file, it's required to adjust it's filename to delete the text part '-TEMPLATE'</u>.</td>
-</tr>
-<tr>
-    <td style="color: orange;">Folder</td>
-    <td>rsrcs</td>
-    <td>Folder to store additional resources for the project, such as documentation, media (images and / or videos), etc.</td>
-</tr>
-<tr>
-    <td style="color: orange;">Folder</td>
-    <td>rsrcs/requirements</td>
-    <td>Folder to store several '<code>requirements.txt</code>' files, used to set up environment by installing packages / libraries, specifically using devcontainers.</td>
-</tr>
-<tr>
-    <td>File</td>
-    <td>rsrcs/requirements/README_requirements.md</td>
-    <td>README with instructions to properly create the several '<code>requirements.txt</code>' files required for the project.</td>
-</tr>
-<tr>
-    <td>File</td>
-    <td>rsrcs/requirements/requirements_development.txt</td>
-    <td>'<code>requirements.txt</code>' file, specifically used for development stage. <b>It's used when creating Docker image, via devcontainers in VS Code</b>.</td>
-</tr>
-<tr>
-    <td>File</td>
-    <td>rsrcs/requirements/requirements_production.txt</td>
-    <td>'<code>requirements.txt</code>' file, specifically used for production stage. <b>It's used when creating Docker image, via devcontainers in VS Code</b>.</td>
-</tr>
-<tr>
-    <td>File</td>
-    <td><p>...</p><p>rsrcs/requirements/requirements_[variations].txt</p><p>...</p></td>
-    <td><i>[Other requirements files]</i>.</td>
-</tr>
+    <tr>
+        <th>File or Folder</th>
+        <th>Path and Name</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>File</td>
+        <td>LICENSE</td>
+        <td>Project's license for reproduction and usage by 3rd parties.</td>
+    </tr>
+    <tr>
+        <td>File</td>
+        <td>README.md</td>
+        <td>This file, for project's <b>main</b> documentation.</td>
+    </tr>
+    <tr>
+        <td>File</td>
+        <td>index.html</td>
+        <td><b>ROOT</b> html file, that serves as <b>dummy</b> webpage, to redirect to proper 'home'; e.g. redirects to '<code>./rsrcs/io_inputs/app/config/web_pages/01/home.html</code>'.</td>
+    </tr>
+    <tr>
+        <td style="color: orange;">Folder</td>
+        <td>rsrcs</td>
+        <td>Folder to store all resources for the project, such as code files, modules, documentation, media (images and / or videos), etc.</td>
+    </tr>
+    <tr>
+        <td style="color: orange;">Folder</td>
+        <td>rsrcs/media</td>
+        <td>Folder to store <b>ALL</b> media files such as images and videos; e.g. favicon for webpages, images for '<code>README.md</code>', etc.</td>
+    </tr>
+    <tr>
+        <td style="color: orange;">Folder</td>
+        <td>rsrcs/io_inputs/app/config</td>
+        <td>Folder to store configuration files for the project, such as scripts, packages and modules to import, web pages and their folders, etc.</td>
+    </tr>
+    <tr>
+        <td style="color: orange;">Folder</td>
+        <td>rsrcs/io_inputs/app/config/imports</td>
+        <td>Store files to import, such as configuration variables, scripts and modules; e.g. <code>Python</code> modules imported with <code>PyScript</code>, <code>TOML</code> or <code>JSON</code> configuration files, <code>YAML</code> files, etc.</td>
+    </tr>
+    <tr>
+        <td style="color: orange;">Folder</td>
+        <td>rsrcs/io_inputs/app/config/webpages</td>
+        <td>Store webpages folders, thought as storing main 3 elements of web development: <code>HTML</code>, <code>CSS</code>, and <code>JavaScript</code> files. While former 2 are meant to be stored <b>all</b> in this folder, <code>HTML</code> files are meant to be stored, each one in it's <b>own</b> folder; e.g. <code>./01/home.html</code>, <code>./02/create_contact.html</code>, etc.</td>
+    </tr>
+    </tr>
+        <td>File</td>
+        <td><p>...</p><p>rsrcs/io_inputs/app/config/webpages/style.css</p><p>...</p></td>
+        <td>Webpages CSS style files.</td>
+    </tr>
+    </tr>
+        <td>File</td>
+        <td><p>...</p><p>rsrcs/io_inputs/app/config/webpages/app.js</p><p>...</p></td>
+        <td>Webpages JavaScript (JS) files.</td>
+    </tr>
+    </tr>
+        <td style="color: orange;">Folder</td>
+        <td><p>...</p><p>rsrcs/io_inputs/app/config/webpages/01</p><p>...</p></td>
+        <td>Webpages parent folders. Naming starting at '01' for organization purposes, and subpages will follow naming convention; e.g. '0101' at same level.</td>
+    </tr>
 </table>
 
 ## Potential New Features.
 
 List of ideas to consider for new features:
 
-- Implement user form, not in Python, but for web; i.e. using HTML, CSS, and Javascript. Ideas for it:
+- [✅ IMPLEMENTED, on 2025.10.05] Implement user form, not in Python, but for web; i.e. using HTML, CSS, and Javascript. Ideas for it:
     - Run Python in a browser, using 'PyScript': '<https://pyscript.net/>', '<https://docs.pyscript.net/2025.8.1/>', '<https://docs.pyscript.net/2025.8.1/beginning-pyscript/>'.
     - Deploy 'small' Python projects running on browsers: '<https://pyscript.com/>'.
 
+### Fix CORS (Cross-Origin) Error when trying to connect with HubSpot API.
+
+[First iteration](./rsrcs/io_inputs/app/config/imports/hubspot_contacts_creation-launcher.py) tried to implement HTTP connection with HubSpot API, via the `Python` library `requests`, but it was not possible to implement since it trigered [CORS errors](https://developers.hubspot.com/docs/cms/reference/serverless-functions/serverless-functions#cors):
+
+<div align="center">
+    <img src="./rsrcs/media/img-readme_cors_error.png" width="600" />
+</div>
+
+The solution basically involves **setting-up a server** using a back-end service; e.g. `NodeJS` or `PHP`, for the server to make the request by mirroring the HubSpot API, and then enabling CORS on your side:
+
+- 'How to Enable CORS/AJAX Requests for any HubSpot API': '<https://www.kelp.agency/blog/how-to-enable-cors-ajax-requests-for-any-hubspot-api/>'.
+- 'How to Fix Cross-Origin Errors — CORS Error Explained': '<https://www.freecodecamp.org/news/how-to-fix-cross-origin-errors/>'.
+
 ## Repo. Branches.
 
-**<u>As of 2025.09.22:</u>**
+**<u>As of 2025.10.05:</u>**
 
 ``` mermaid
-
 ---
 title: REPO. BRANCHES STRUCTURE.
 config:
     theme: 'dark'
 ---
-
 %% GitGraph Diagrams in Mermaid.js: 'https://docs.mermaidchart.com/mermaid-oss/syntax/gitgraph.html'.
 %% Set themes, from presets: 'base', 'forest', 'dark', 'default', 'neutral'. Ref. 'https://docs.mermaidchart.com/mermaid-oss/syntax/gitgraph.html#themes'.
 %% Diagram orientation: LR (default), TB, BT. Ref.: 'https://docs.mermaidchart.com/mermaid-oss/syntax/gitgraph.html#orientation-v10-3-0'.
-
 gitGraph LR:
+    %% Commit 'chore: init'.
     commit id: 'b5db891' type: HIGHLIGHT
-
-    branch 'feature/load-contacts-from-csv' order: 3
+    %% New branch.
+    branch 'feature/load-contacts-from-csv' order: 4
     commit id: '6930d08' tag: 'archive/feature/load-contacts-from-csv'
     checkout main
     merge feature/load-contacts-from-csv
-    
-    branch 'feature/hubspot-api-connection' order: 2
+    %% New branch.
+    branch 'feature/hubspot-api-connection' order: 3
     commit id: '50d1bb5'
-    commit id: '1ed1336'
-    commit id: '70b9134'
+    commit id: '[others... 01]'
     commit id: '81a67d1' tag: 'v0.1.0'
     checkout main
     merge feature/hubspot-api-connection
-
-    branch 'feature/user-form' order: 1
+    %% New branch.
+    branch 'feature/user-form' order: 2
     commit id: 'f452449'
-    commit id: '67f8202'
+    commit id: '[others... 02]'
     commit id: '7aa6e58' tag: 'v0.2.0'
-    commit id: 'ea788ca'
-    commit id: '[current_commit]' type: HIGHLIGHT
+    commit id: '[others... 03]'
+    commit id: '5a8c471'
     checkout 'main'
     merge 'feature/user-form'
-
+    %% Switch branch.
     checkout 'feature/hubspot-api-connection'
     commit id: '065aede' tag: 'v0.1.1-divergent_0.1.0' type: HIGHLIGHT
     commit id: '8ea56f2'
-
+    %% Switch branch.
+    checkout 'main'
+    commit id: '99d0678'
+    %% New branch.
+    branch 'feature/web-interface' order: 1
+    commit id: '99b1be9' tag: 'v0.3.0-divergent_99d0678' type: HIGHLIGHT
+    commit id: '[others... 04]'
+    commit id: 'cc21e5c' tag: 'v0.3.1-divergent_99d0678'
+    commit id: '[current_commit]' type: HIGHLIGHT
+%% EOF.
 ```
 
-- Feature branches; i.e. **branch's name starting with prefix 'feature/...'**, were developed *incrementally* as visually exposed: started with 'main', created 1st 'load-contacts-from-csv', then 'hubspot-api-connection', and finally 'user-form'.
-    - All branches started with 'main' as reference, and **later merged-back** to 'main', when finished development.
+<details>
+    <summary><i>Please click here to expand, in case previous diagram (in Mermaid.js) doesn't render</i>.</summary>
+    <br>
+    <div align="center">
+        <img src="./rsrcs/media/img-readme_repo_branches_structure.png" width="1200" />
+    </div>
+</details>
+<br>
+
+Feature branches; i.e. **branch's name starting with prefix 'feature/...'**, were developed *incrementally* as visually exposed: started with 'main', created 1st 'load-contacts-from-csv', then 'hubspot-api-connection', and so on.
+
+- In general, branches started with 'main' as reference and **later merged-back** to 'main' when finished development, **UNLESS they diverged**; e.g 'feature/web-interface'.
+
+## Divergent Branches.
 
 > [!IMPORTANT]
-> Branch **'feature/hubspot-api-connection'** DIVERGED AS IT 'OWN VERSION' after **commit with tag 'v0.1.0'**, since initial focus of bulk-upload of contacts via '.csv' files (coming from branch 'feature/load-contacts-from-csv') was REPLACED (not complemented) by afterwards-feature of using a form for creation of contacts, one at a time (i.e. branch 'feature/user-form').
->   - Commit with tag **'v0.1.1-divergent_0.1.0'** marks the *1st commit divergent from 'main'*. The text 'divergent_0.1.0' means the **branch diverged since commit with tag 'v0.1.0'**, and 'v0.1.1' **follows the consecutive order from last commit it diverged**; i.e. 'v0.1.0'.
+> **Divergent branches (and commits)** are branches or commits that represent developments that ARE INCOMPATIBLE with 'main' branch; e.g. having bulk-upload of contacts via '`.csv`' files locally, and then migrating to a form (front-end like) that creates one contact at a time.
+
+**DIVERGENT COMMIT '`065aede`'**.
+
+Branch '`feature/hubspot-api-connection`' DIVERGED AS IT 'OWN VERSION' after **commit with tag '`v0.1.0`' (i.e. '`065aede`')**, since initial focus of bulk-upload of contacts via '`.csv`' files (coming from branch '`feature/load-contacts-from-csv`') was REPLACED (not complemented) by afterwards-feature of using a form for creation of contacts, one at a time (i.e. branch '`feature/user-form`').
+
+- Commit with tag '`v0.1.1-divergent_0.1.0`' marks the *1st commit divergent from '`main`'*. The text 'divergent_0.1.0' means the **branch diverged since commit with tag '`v0.1.0`'**, and 'v0.1.1' **follows the consecutive order from last commit it diverged**; i.e. '`v0.1.0`'.
+
+**DIVERGENT BRANCH '`feature/web-interface`' (since divergent commit '`99b1be9`' is the 1st commit in the 'new' branch)**.
+
+The whole branch '`feature/web-interface`' DIVERGED AS IT 'OWN VERSION' since no commit in the branch can be merged-back to the '`main`' branch. All features developed are 'exclusive' of the branch, and **unfortunately**, as of the day of finishing the branch development (2025.Oct.05), the [CORS error](#fix-cors-cross-origin-error-when-trying-to-connect-with-hubspot-api) makes inviable to merge the branch back to '`main`'.
+
+- Commit with tag '`v0.3.0-divergent_99d0678`' marks the *1st commit divergent from '`main`'*. The text 'divergent_99d0678' means the **branch diverged since commit '`99d0678`'**, and 'v0.3.0' **follows the consecutive order of versions**; i.e. '`v0.2.0`'.
+
+- Commit with tag '`v0.3.1-divergent_99d0678`' marks the *continuation* of previous tag '`v0.3.0-divergent_99d0678`'.
 
 ### Tools Considered For Displaying Repo. Branches.
 
@@ -360,29 +402,47 @@ git log --oneline --graph --all         #  View repo. BRANCHES history.
     </td>
     <td><code>v0.2.0</code></td>
 </tr>
+<tr>
+    <td><code>99b1be9</code></td>
+    <td>feature/web-interface</td>
+    <td>
+        <p><u>Divergent version from main tree</u>, where this is the <b>first commit divergent</b> from and after the main tree commit '<code>99d0678</code>'. Tag '<code>v0.3.0-divergent_99d0678</code>' means this commit <b>diverges</b> from commit '<code>99d0678</code>' and <b>continues</b> with version numbering (i.e. '<code>v0.3.0</code>'), based from the last version available it diverged.</p>
+        <p><b>Comment for tagging command:</b> [Tree: divergent since 99d0678] Version '0.3.0'.</p>
+    </td>
+    <td><code>v0.3.0-divergent_99d0678</code></td>
+</tr>
+<tr>
+    <td><code>cc21e5c</code></td>
+    <td>feature/web-interface</td>
+    <td>
+        <p><u>Divergent version from main tree</u>, where this is the contnuation from <b>first commit divergent</b> from and after the main tree commit '<code>99d0678</code>'. Tag '<code>v0.3.1-divergent_99d0678</code>' means this commit <b>diverges</b> from commit '<code>99d0678</code>' and <b>continues</b> with version numbering (i.e. '<code>v0.3.1</code>'), based from the last version available it diverged.</p>
+        <p><b>Comment for tagging command:</b> [Tree: divergent since 99d0678] Version '0.3.1'.</p>
+    </td>
+    <td><code>v0.3.1-divergent_99d0678</code></td>
+</tr>
 </table>
 
 ``` powershell
-
 #  Create ANNOTATED tags.
+
 git tag -a 'archive/feature/load-contacts-from-csv' '6930d08' -m "[Tree: main] Archive of branch by tagging branch's HEAD or most recent / last commit."
 git tag -a 'v0.1.0' '81a67d1' -m "[Tree: main] Version '0.1.0'."
 git tag -a 'v0.1.1-divergent_0.1.0' '065aede' -m "[Tree: divergent since v0.1.0] Version '0.1.1'."
 git tag -a 'v0.2.0' '7aa6e58' -m "[Tree: main] Version '0.2.0'."
 
+git tag -a 'v0.3.0-divergent_99d0678' '99b1be9' -m "[Tree: divergent since 99d0678] Version '0.3.0'"
+git tag -a 'v0.3.1-divergent_99d0678' 'cc21e5c' -m "[Tree: divergent since 99d0678] Version '0.3.1'"
 ```
 
 3. Validate new tags creation.
 
 ``` powershell
-
 #  Get list of declared tags.
 git tag                                 #  List ALL tags.
 git tag -l 'v*'                         #  List tags that start with 'v'; e.g. 'v1.0'.
 
 #  Show details of specific tag; e.g. 'v0.1.0'.
 git show 'v0.1.0'                       #  Show details of the COMMIT the tag is referring to.
-
 ```
 
 4. Push / publish new tags in **remote** repo.
